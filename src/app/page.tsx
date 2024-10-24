@@ -1,7 +1,27 @@
 import Image from "next/image";
+import ActivityCard from "./_components/cards/ActivityCard";
+import ReelsCard from "./_components/cards/ReelsCard";
 
 export default function Home() {
   return (
+
+    <>
+      <div className="grid grid-cols-5 gap-3 px-24">
+        <ActivityCard />
+        <ActivityCard />
+        <ActivityCard />
+        <ActivityCard />
+        <ActivityCard />
+      </div>
+      <div className="grid grid-cols-5 gap-0 px-32">
+        <ReelsCard/>
+        <ReelsCard/>
+        <ReelsCard/>
+        <ReelsCard/>
+        <ReelsCard/>
+      </div>
+    </>
+=======
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
@@ -97,5 +117,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
+
   );
 }
