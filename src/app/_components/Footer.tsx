@@ -111,17 +111,20 @@ function Footer() {
                 <Image
                   src="/Visa.png"
                   width={54}
+                  alt="visa"
                   height={32}
                   className="bg-white rounded-sm"
                 />
                 <Image
                   src="/Mastercard.png"
                   width={54}
+                  alt="mastercard"
                   height={32}
                   className="bg-white rounded-sm"
                 />
                 <Image
                   src="/Amex.png"
+                  alt="amex logo"
                   width={54}
                   height={32}
                   className="bg-white rounded-sm"
@@ -130,18 +133,21 @@ function Footer() {
               <div className="flex gap-2">
                 <Image
                   src="/PayPal.png"
+                  alt="paypal logo"
                   width={54}
                   height={32}
                   className="bg-white rounded-sm"
                 />
                 <Image
                   src="/GooglePay.png"
+                  alt="google pay logo"
                   width={54}
                   height={32}
                   className="bg-white rounded-sm"
                 />
                 <Image
                   src="/ApplePay.png"
+                  alt="apple pay logo"
                   width={54}
                   height={32}
                   className="bg-white rounded-sm"
@@ -156,12 +162,14 @@ function Footer() {
             <div className=" mb-10  space-y-4 flex flex-col items-center md:items-start">
               <Image
                 src="/playstore.png"
+                alt="playstore logo"
                 width={180}
                 height={50}
                 className="rounded-sm"
               />
               <Image
                 src="/applestore.png"
+                alt="applestore logo"
                 width={180}
                 height={50}
                 className="rounded-sm"

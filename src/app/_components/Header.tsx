@@ -43,7 +43,7 @@ function Header() {
         <h2 className="flex gap-1 items-center">
           USD(US$) <ChevronDown className="w-5 h-5" />
         </h2>
-        <Image src="/shopping-cart.png" width={20} height={20} />
+        <Image src="/shopping-cart.png" width={20} height={20} alt="shoppingcart logo" />
         <h2>
           <Heart className="w-5 h-5" />
         </h2>
