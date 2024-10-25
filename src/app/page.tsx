@@ -1,10 +1,14 @@
 import Image from "next/image";
 import ActivityCard from "./_components/cards/ActivityCard";
 import ReelsCard from "./_components/cards/ReelsCard";
+import Slider from "./_components/hero/sliders/sliders";
 
 export default function Home() {
   return (
     <>
+    <div>
+      <Slider></Slider>
+    </div>
       <div className="grid grid-cols-5 gap-3 px-24">
         <ActivityCard />
         <ActivityCard />
