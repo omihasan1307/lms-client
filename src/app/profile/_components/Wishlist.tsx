@@ -7,10 +7,10 @@ function Wishlist() {
     <div>
       <main className="flex-1 ">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold ">
             Wishlist <span className="text-red-500">(0)</span>
           </h1>
-          <button className="text-gray-500 hover:text-gray-700 flex justify-center items-center gap-2">
+          <button className="text-gray-500 hover:text-gray-700 flex justify-center items-center gap-2 text-[14px]">
           <TfiEraser />
           Clear All
           </button>
