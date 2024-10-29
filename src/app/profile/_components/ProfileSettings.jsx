@@ -35,13 +35,13 @@ function ProfileSettings() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Full Name */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2 ">
               Full Name
             </label>
             <input
               type="text"
               placeholder="Customer Name"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
             />
           </div>
 
@@ -53,7 +53,7 @@ function ProfileSettings() {
             <input
               type="email"
               placeholder="ahosan@example.com"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
             />
           </div>
 
@@ -65,7 +65,7 @@ function ProfileSettings() {
             <div className="flex items-center relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center w-32 p-2 border border-gray-300 rounded-l-md bg-white"
+                className="flex items-center w-32 p-2 border border-gray-300 rounded-l-md  bg-gray-100"
               >
                 <img
                   src={selectedCountry.flag}
@@ -93,7 +93,7 @@ function ProfileSettings() {
               <input
                 type="text"
                 placeholder="01747 51XX XX"
-                className="w-full p-2 border border-gray-300 rounded-r-md"
+                className="w-full p-2 border border-gray-300 rounded-r-md bg-gray-100"
               />
             </div>
           </div>
@@ -106,7 +106,7 @@ function ProfileSettings() {
             <input
               type="text"
               placeholder="Via San Pietro Ad Aram 142, Usmate, Milano, Italy"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
             />
           </div>
         </div>
