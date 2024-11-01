@@ -18,7 +18,7 @@ function MyReviews() {
         </div>
         <ReviewCard />
         <ReviewedCard/>
-        <ReviewPopUpCard/>
+        {/* <ReviewPopUpCard/> */}
     </div>
   )
 }

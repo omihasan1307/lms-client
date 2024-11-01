@@ -1,4 +1,4 @@
-function ReviewPopUpCard() {
+function ReviewPopUpCard({ onClose }) {
   return (
     <div>
       <div class=" bg-transparent md:mt-44  bg-gray-100 md:left-[600px] w-[400px] top-0 md:w-[560px] absolute  mx-auto  flex flex-col justify-center ">
@@ -71,7 +71,7 @@ function ReviewPopUpCard() {
                 </textarea>
               </div>
               <div className="flex items-center justify-center gap-4">
-                <button class="py-3 px-10 my-8 text-lg bg-[#010A151A] border  text-black rounded-xl text-[15px] font-bold">
+                <button onClick={ onClose } class="py-3 px-10 my-8 text-lg bg-[#010A151A] border  text-black rounded-xl text-[15px] font-bold">
                   Cancel
                 </button>
                 <button class="py-3 px-10 my-8 text-lg bg-[#DD2509]  text-white rounded-xl text-[15px] font-bold">

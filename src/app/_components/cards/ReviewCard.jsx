@@ -1,10 +1,18 @@
+"use client"
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaCalendar, FaUsers } from "react-icons/fa6";
 import { TbTicket } from "react-icons/tb";
 import { TfiEraser } from "react-icons/tfi";
+import ReviewPopUpCard from "./ReviewPopUpCard";
 
 function ReviewCard() {
+    const [showReviewForm, setShowReviewForm] = useState(false);
+
+    // Function to handle the button click
+    const handleWriteReviewClick = () => {
+      setShowReviewForm(true);
+    };
   return (
     <div>
       <div className="bg-white  rounded-lg  ">
@@ -58,11 +66,12 @@ function ReviewCard() {
           </div>
 
           {/* Price Section */}
-          <div className="flex flex-col justify-center items-end sm:items-end mt-4 sm:mt-0  sm:pl-4 pt-4 sm:pt-0">
+          <div onClick={handleWriteReviewClick}  className="flex flex-col justify-center items-end sm:items-end mt-4 sm:mt-0  sm:pl-4 pt-4 sm:pt-0">
             <p className="px-5 py-2 bg-black rounded-md text-white font-bold text-[12px] cursor-pointer">Write a Review</p>
           </div>
         </div>
       </div>
+      {showReviewForm && <ReviewPopUpCard onClose={() => setShowReviewForm(false)} />}
     </div>
   );
 }
