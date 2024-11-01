@@ -2,6 +2,7 @@ import React from 'react'
 import { TfiEraser } from 'react-icons/tfi'
 import ReviewCard from "../../_components/cards/ReviewCard"
 import ReviewedCard from "../../_components/cards/ReviewedCard"
+import ReviewPopUpCard from "../../_components/cards/ReviewPopUpCard"
 
 function MyReviews() {
   return (
@@ -17,6 +18,7 @@ function MyReviews() {
         </div>
         <ReviewCard />
         <ReviewedCard/>
+        <ReviewPopUpCard/>
     </div>
   )
 }

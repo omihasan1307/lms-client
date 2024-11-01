@@ -97,8 +97,13 @@ function ReviewedCard() {
           </p>
         </div>
       </div>
+      
     </div>
   );
 }
 
 export default ReviewedCard;
+
+
+
+
