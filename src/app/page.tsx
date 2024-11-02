@@ -2,10 +2,13 @@ import Image from "next/image";
 import ActivityCard from "./_components/cards/ActivityCard";
 import ReelsCard from "./_components/cards/ReelsCard";
 import Slider from "./_components/hero/sliders/sliders";
+import Footer from "./_components/Footer";
+import Header from "./_components/Header";
 
 export default function Home() {
   return (
     <>
+    <Header/>
     <div>
       <Slider></Slider>
     </div>
@@ -24,7 +27,7 @@ export default function Home() {
         <ReelsCard />
       </div>
 
-      
+      <Footer/>
     </>
   );
 }
