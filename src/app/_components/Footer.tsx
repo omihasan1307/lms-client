@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import {
   FaFacebookF,
@@ -58,7 +59,7 @@ function Footer() {
             </h2>
             <nav className="list-none mb-10 text-[15px] font-normal cursor-pointer space-y-2">
               <li>
-                <a className="text-[#A9AEB9]  hover:text-gray-200">About Us</a>
+                <Link href="/about-us" className="text-[#A9AEB9]  hover:text-gray-200">About Us</Link>
               </li>
               <li>
                 <a className="text-[#A9AEB9]  hover:text-gray-200">Careers</a>
