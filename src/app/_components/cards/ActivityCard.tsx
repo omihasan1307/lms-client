@@ -11,7 +11,7 @@ function ActivityCard() {
             <div className="relative">
               <img
                 className="rounded-lg"
-                src="https://s3-alpha-sig.figma.com/img/82ad/eeaf/50a0ae2d1c41c877eb1c9b4bfc6706e6?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jJql2bfGObTULJuA4lAG0iaIVWcYASO96vO26HGR6sVjK--4MOeHIWgJ2OO5jlRB30fVWAo-jCSogypz75lfFZUUC3KLhJ5AZ-8nwKt7RAMQrE6QmErmyX72Pomz-8AKr3ZyLf5asAl3QIMQVqTZt8BRwuuU3OT-zmUVAwzKU1nQi-gmomt9dR33S0UHga3BHoSVqJqo9qg7lipU2MsYXgcyTXP0XKtOQEGdHcWdC8pZcw9WcztXXMSlRW-2ODqaNlqk3AWncLI-7O~IaTrYKoCkhsBcKSN-gvm-8KD0qsb-Dev6vPphDl8Rb8Y5TRlZSALAim1JvIfIi872BsGGLQ__"
+                src="https://www.travelandleisure.com/thmb/wsA6EXFuYkqtuJGLbQWw05-cwPs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/lake-como-MOSTBEAUTIFUL0921-cb08f3beff1041e4beefc67b5e956b23.jpg"
                 alt="Dubai Tandem Skydive"
               />
 
