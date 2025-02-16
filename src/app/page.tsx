@@ -3,24 +3,19 @@ import ActivityCard from "./_components/cards/ActivityCard";
 import ReelsCard from "./_components/cards/ReelsCard";
 import HeroSlider from "./_components/HeroSlider";
 import Footer from "./_components/Footer";
-import Header from "./_components/Header";
 import TrendingHeading from "./_components/TrendingHeading";
+import MainLayout from "@/layout/MainLayout";
 
 export default function Home() {
   return (
-    <>
-    <Header/>
-    <div>
-      <HeroSlider/>
-    </div>
-    <TrendingHeading/>
-      <div className="grid grid-cols-5 gap-3 px-20 mt-[-100px]">
-        <ActivityCard />
-        <ActivityCard />
-        <ActivityCard />
-        <ActivityCard />
-        <ActivityCard />
+    <MainLayout>
+      <div>
+        <HeroSlider />
       </div>
+      <TrendingHeading />
+     
+        <ActivityCard />
+   
       <div className="grid grid-cols-5 gap-0 px-20">
         <ReelsCard />
         <ReelsCard />
@@ -28,8 +23,6 @@ export default function Home() {
         <ReelsCard />
         <ReelsCard />
       </div>
-
-      <Footer/>
-    </>
+    </MainLayout>
   );
 }

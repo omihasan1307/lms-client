@@ -1,60 +1,35 @@
 import Image from "next/image";
 import React from "react";
 
-function Gallery() {
+function Gallery({ data }: any) {
+  if (!data?.images || data.images.length === 0) return null; // Handle empty images
+
   return (
-    <div className="my-5 w-full flex gap-4 items-center justify-center">
-      <div className="w-1/2 ">
+    <div className="my-5 w-full grid grid-cols-2 gap-4">
+      {/* Large Image (First One) */}
+      <div className="col-span-2 md:col-span-1">
         <Image
-          className="rounded-lg"
+          className="rounded-lg w-full h-auto object-cover"
           height={450}
           width={700}
-          src="https://media.istockphoto.com/id/1952253409/photo/skyline-paris.jpg?s=2048x2048&w=is&k=20&c=dTKLoqGjiavuu54SMuep8-1ggT89YLNXvSPlcNt3N8U="
-          alt="gallery-1"
+          src={data.images[0]?.url}
+          alt={`gallery-1`}
         />
       </div>
-      <div className="w-1/2">
-        <div className="flex gap-4 items-center justify-center">
-          <div>
-            <Image
-              className="rounded-lg"
-              height={200}
-              width={560}
-              src="https://cdn.pixabay.com/photo/2023/12/04/16/12/berlin-8429780_1280.jpg"
-              alt="gallery-2"
-            />
-          </div>
 
-          <div>
+      {/* Grid of Smaller Images */}
+      <div className="col-span-2 md:col-span-1 grid grid-cols-2 gap-4">
+        {data.images.slice(1, 5).map((image: any, index: number) => (
+          <div key={image.id} className="w-full">
             <Image
-              className="rounded-lg"
+              className="rounded-lg w-full h-auto object-cover"
               height={200}
               width={560}
-              src="https://cdn.pixabay.com/photo/2014/11/22/08/37/thames-541456_1280.jpg"
-              alt="gallery-3"
+              src={image.url}
+              alt={`gallery-${index + 2}`}
             />
           </div>
-        </div>
-        <div className="flex gap-4 mt-4">
-          <div>
-            <Image
-              className="rounded-lg"
-              height={200}
-              width={560}
-              src="https://cdn.pixabay.com/photo/2014/11/22/08/37/thames-541456_1280.jpg"
-              alt="gallery-4"
-            />
-          </div>
-          <div>
-            <Image
-              className="rounded-lg"
-              height={200}
-              width={560}
-              src="https://cdn.pixabay.com/photo/2023/12/04/16/12/berlin-8429780_1280.jpg"
-              alt="gallery-5"
-            />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

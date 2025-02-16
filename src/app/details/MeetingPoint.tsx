@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-function MeetingPoint() {
+function MeetingPoint({ data }: any) {
   return (
     <div>
       <h2 className="text-xl font-extrabold">Meeting Point</h2>
@@ -14,7 +14,9 @@ function MeetingPoint() {
             alt="icon"
           />
         </div>
-        <p className="text-[#DD2509] text-[15px] font-bold">1-Day Ticket Unlimited Hop-on and Hop-off Access</p>
+        <p className="text-[#DD2509] text-[15px] font-bold">
+          1-Day Ticket Unlimited Hop-on and Hop-off Access
+        </p>
       </div>
       <p className=" bg-[#F4F4F4] mt-3 p-6 mr-2 rounded-lg text-[#010A15B2] text-[15px]">
         Green Line Tours bus route starts from Terminal Station at Piazza dei

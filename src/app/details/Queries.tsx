@@ -3,7 +3,7 @@ import { IoCheckmarkOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { TbPointFilled } from "react-icons/tb";
 
-function Queries() {
+function Queries({ data }: any) {
   return (
     <div>
       <h2 className="text-xl font-extrabold mt-6">Additional Queries</h2>
@@ -221,31 +221,31 @@ function Queries() {
       <p className="text-[#DD2509] text-[15px] font-bold mt-3">Opening hours</p>
       <div className="text-[15px] text-[#010A15B2] my-3 space-y-3 bg-[#F4F4F4] p-5 rounded-lg">
         <div className="flex justify-between border-b-[1px] pb-2 font-bold">
-          <p >Saturday</p>
+          <p>Saturday</p>
           <p>07:00 - 19:00</p>
         </div>
         <div className="flex justify-between border-b-[1px] pb-2">
-          <p >Sunday</p>
+          <p>Sunday</p>
           <p>07:00 - 19:00</p>
         </div>
         <div className="flex justify-between border-b-[1px] pb-2">
-          <p >Monday</p>
+          <p>Monday</p>
           <p>07:00 - 19:00</p>
         </div>
         <div className="flex justify-between border-b-[1px] pb-2">
-          <p >Tuesday</p>
+          <p>Tuesday</p>
           <p>07:00 - 19:00</p>
         </div>
         <div className="flex justify-between border-b-[1px] pb-2">
-          <p >Wednesday</p>
+          <p>Wednesday</p>
           <p>07:00 - 19:00</p>
         </div>
         <div className="flex justify-between border-b-[1px] pb-2">
-          <p >Thursday</p>
+          <p>Thursday</p>
           <p>07:00 - 19:00</p>
         </div>
         <div className="flex justify-between border-b-[1px] pb-2">
-          <p >Friday</p>
+          <p>Friday</p>
           <p>07:00 - 19:00</p>
         </div>
       </div>

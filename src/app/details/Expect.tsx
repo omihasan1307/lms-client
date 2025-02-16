@@ -1,6 +1,6 @@
 import React from "react";
 
-function Expect() {
+function Expect({data}:any) {
   return (
     <div>
       <h2 className="text-xl font-extrabold mt-6">What To Expect</h2>

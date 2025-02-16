@@ -10,21 +10,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
+} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 function Header() {
   return (
     <div className="flex justify-between items-center px-20 py-5 font-medium">
-      <div>
+      <Link href="/">
         <Image src="/logo.png" alt="logo" width={90} height={44} />
-      </div>
+      </Link>
       <div className="flex gap-8 items-center text-[15px]">
-        <h2>Home</h2>
+        <Link href="/">Home</Link>
         <h2 className="flex gap-1 items-center">
           Categories{" "}
           <DropdownMenu>
-            <DropdownMenuTrigger><ChevronDown className="w-5 h-5" /></DropdownMenuTrigger>
+            <DropdownMenuTrigger>
+              <ChevronDown className="w-5 h-5" />
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -34,16 +36,20 @@ function Header() {
               <DropdownMenuItem>Subscription</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          
         </h2>
-        <h2>Blogs</h2>
+        <Link href="/blog">Blogs</Link>
         <h2 className="flex gap-1 items-center">
           English <ChevronDown className="w-5 h-5" />
         </h2>
         <h2 className="flex gap-1 items-center">
           USD(US$) <ChevronDown className="w-5 h-5" />
         </h2>
-        <Image src="/shopping-cart.png" width={20} height={20} alt="shoppingcart logo" />
+        <Image
+          src="/shopping-cart.png"
+          width={20}
+          height={20}
+          alt="shoppingcart logo"
+        />
         <h2>
           <Heart className="w-5 h-5" />
         </h2>
