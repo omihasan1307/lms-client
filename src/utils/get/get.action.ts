@@ -1,4 +1,4 @@
-import axiosInstance from "@/lib/AxiosInstance";
+// "use server";
 import envConfig from "@/lib/env.config";
 import axios from "axios";
 
@@ -17,16 +17,8 @@ export const getProductDetails = async (type: string | null, id: Number) => {
 };
 
 export const getProductList = async () => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-
   try {
-    const response = await axios.get(
-      `${envConfig.baseApi}/shop/tours/`,
-      fetchOptions
-    );
+    const response = await axios.get(`${envConfig.baseApi}/shop/tours/`);
     return response?.data;
   } catch (error: any) {
     console.log(error);

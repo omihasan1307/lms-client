@@ -19,29 +19,7 @@ function Details() {
 
   const { data: tourData } = useGetProductDetails(type, id as any);
 
-  // useEffect(() => {
-  //   if (!type || !id) return; // Prevent API call if params are missing
-
-  //   const fetchTourDetails = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://gt.codecanvascreation.com/shop/tours/${type}/${id}/`
-  //       );
-  //       setTourData(response.data); // Store the fetched data
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError("Failed to fetch tour details");
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchTourDetails();
-  // }, [type, id]);
-
-  // console.log("Tour Data:", tourData);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>{error}</div>;
+  console.log(tourData);
 
   return (
     <MainLayout>

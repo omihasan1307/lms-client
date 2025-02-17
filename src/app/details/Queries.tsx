@@ -1,113 +1,126 @@
 import Image from "next/image";
+import { format } from "path";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { TbPointFilled } from "react-icons/tb";
 
+const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 function Queries({ data }: any) {
+  // const schedule = data?.schedules?.map((sch: any) =>
+  //   sch?.available_days?.map((day: any) => day.name)
+  // );
+
+  const schedule = data?.schedules?.[0];
+
+  if (!schedule) return <p>No schedule available</p>;
+
+  // Get available days from the schedule
+  const availableDays = schedule.available_days.map((day: any) => day.name);
+
   return (
     <div>
       <h2 className="text-xl font-extrabold mt-6">Additional Queries</h2>
       <p className="text-[#DD2509] text-[15px] font-bold mt-3">
         What’s Included & Not Included
       </p>
-      <div className="flex flex-wrap   bg-[#F4F4F4]  rounded-lg mt-3">
-        <div className="sm:w-1/2 w-full">
-          <div className="flex gap-2 p-4 h-full items-center">
-            <TbPointFilled className="text-[#69BA43] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
+
+      {/* ------------------ */}
+
+      <div>
+        {/* Inclusions & Exclusions Container */}
+        <div className="flex flex-wrap bg-[#F4F4F4] rounded-lg mt-3">
+          {/* Inclusion Header */}
+          <div className="w-full sm:w-1/2">
+            <div className="flex gap-2 p-4 items-center">
+              <TbPointFilled className="text-[#69BA43] flex-shrink-0 text-md" />
               <p className="text-[15px] text-[#010A15] font-bold">Included</p>
             </div>
           </div>
-        </div>
-        <div className="sm:w-1/2 w-full">
-          <div className="flex gap-2 p-4 h-full items-center">
-            <TbPointFilled className="text-[#9B341D] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
+
+          {/* Exclusion Header */}
+          <div className="w-full sm:w-1/2">
+            <div className="flex gap-2 p-4 items-center">
+              <TbPointFilled className="text-[#9B341D] flex-shrink-0 text-md" />
               <p className="text-[15px] text-[#010A15] font-bold">Exclusions</p>
             </div>
           </div>
-        </div>
-        <div className="sm:w-1/2 w-full">
-          <div className="flex gap-2 p-4 h-full items-center">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
-              <p className="text-[15px] text-[#010A15B2]">
-                Multilingual audio headset
-              </p>
-            </div>
+
+          {/* Map Inclusions */}
+          <div className="w-full sm:w-1/2">
+            {data?.inclusions?.map((item: any) => (
+              <div key={item.id} className="flex gap-2 p-4 items-center">
+                <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
+                <p className="text-[15px] text-[#010A15B2]">{item.name}</p>
+              </div>
+            ))}
           </div>
-        </div>
 
-        <div className=" sm:w-1/2 w-full">
-          <div className="  flex gap-2 p-4 h-full items-center ">
-            <RxCross2 className="text-[#9B341D] flex-shrink-0 text-md" />
-
-            <div className="">
-              <p className="text-[15px] text-[#010A15B2]">
-                Admission to attractions, monuments and museums
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className=" sm:w-1/2 w-full">
-          <div className="  flex gap-2 p-4 h-full items-center ">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
-
-            <div className="">
-              <p className="text-[15px] text-[#010A15B2]">
-                Hop-on hop-off map of Rome showing the route of the Panoramic
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className=" sm:w-1/2 w-full">
-          <div className="  flex gap-2 p-4 h-full items-center ">
-            <RxCross2 className="text-[#9B341D] flex-shrink-0 text-md" />
-
-            <div className="">
-              <p className="text-[15px] text-[#010A15B2]">
-                Optional gratuities
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className=" sm:w-1/2 w-full">
-          <div className="  flex gap-2 p-4 h-full items-center ">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
-
-            <div className="">
-              <p className="text-[15px] text-[#010A15B2] ">WiFi available</p>
-            </div>
-          </div>
-        </div>
-        <div className=" sm:w-1/2 w-full">
-          <div className="  flex gap-2 p-4 h-full items-center ">
-            <RxCross2 className="text-[#9B341D] flex-shrink-0 text-md" />
-
-            <div className="">
-              <p className="text-[15px] text-[#010A15B2]">
-                Please be advised that, only small dogs with kennel are admitted
-                on board
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className=" sm:w-1/2 w-full">
-          <div className="  flex gap-2 p-4 h-full items-center ">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
-
-            <div className="">
-              <p className="text-[15px] text-[#010A15B2] ">
-                Interesting and informative commentary through the headphones.
-                13 languages available
-              </p>
-            </div>
+          {/* Map Exclusions */}
+          <div className="w-full sm:w-1/2">
+            {data?.exclusions?.map((item: any) => (
+              <div key={item.id} className="flex gap-2 p-4 items-center">
+                <RxCross2 className="text-[#9B341D] flex-shrink-0 text-md" />
+                <p className="text-[15px] text-[#010A15B2]">{item.name}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* ------------------ */}
+
+      {/* booking Information */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Booking information
+        </p>
+
+        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.bookingInformation}
+        </div>
+      </div>
+      {/* contact Information */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Contact Information
+        </p>
+
+        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.contactInformation}
+        </div>
+      </div>
+
+      {/* cancellation Policy */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Cancellation Policy
+        </p>
+
+        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.cancellationPolicy}
+        </div>
+      </div>
+
+      {/* terms And Conditions */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Terms And Conditions
+        </p>
+
+        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.termsAndConditions}
+        </div>
+      </div>
+
       {/* Additional information */}
       <p className="text-[#DD2509] text-[15px] font-bold mt-3">
         Additional information
@@ -218,35 +231,33 @@ function Queries({ data }: any) {
         </div>
       </div>
       {/* Opening hours */}
-      <p className="text-[#DD2509] text-[15px] font-bold mt-3">Opening hours</p>
-      <div className="text-[15px] text-[#010A15B2] my-3 space-y-3 bg-[#F4F4F4] p-5 rounded-lg">
-        <div className="flex justify-between border-b-[1px] pb-2 font-bold">
-          <p>Saturday</p>
-          <p>07:00 - 19:00</p>
-        </div>
-        <div className="flex justify-between border-b-[1px] pb-2">
-          <p>Sunday</p>
-          <p>07:00 - 19:00</p>
-        </div>
-        <div className="flex justify-between border-b-[1px] pb-2">
-          <p>Monday</p>
-          <p>07:00 - 19:00</p>
-        </div>
-        <div className="flex justify-between border-b-[1px] pb-2">
-          <p>Tuesday</p>
-          <p>07:00 - 19:00</p>
-        </div>
-        <div className="flex justify-between border-b-[1px] pb-2">
-          <p>Wednesday</p>
-          <p>07:00 - 19:00</p>
-        </div>
-        <div className="flex justify-between border-b-[1px] pb-2">
-          <p>Thursday</p>
-          <p>07:00 - 19:00</p>
-        </div>
-        <div className="flex justify-between border-b-[1px] pb-2">
-          <p>Friday</p>
-          <p>07:00 - 19:00</p>
+
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Opening Hours
+        </p>
+        <div className="text-[15px] text-[#010A15B2] my-3 space-y-3 bg-[#F4F4F4] p-5 rounded-lg">
+          {weekDays.map((day) => {
+            const isOpen = availableDays?.includes(day);
+            return (
+              <div
+                key={day}
+                className="flex justify-between border-b-[1px] pb-2"
+              >
+                <p className="font-bold">{day}</p>
+                <p>
+                  {isOpen ? (
+                    <p>
+                      {" "}
+                      {schedule?.start_time} - {schedule?.end_time}{" "}
+                    </p>
+                  ) : (
+                    <p className="text-red-400">Closed</p>
+                  )}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

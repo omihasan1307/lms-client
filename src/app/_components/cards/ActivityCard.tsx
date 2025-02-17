@@ -14,14 +14,12 @@ function ActivityCard() {
           <div
             key={activity.id}
             className="bg-white relative transition duration-500 rounded-lg"
+            onClick={() => {
+              const queryString = `?type=${activity?.api?.api_type}&id=${activity?.api?.id}`;
+              router.push(`/details${queryString}`);
+            }}
           >
-            <div
-              className="relative"
-              onClick={() => {
-                const queryString = `?type=${activity?.api?.api_type}&id=${activity?.api?.id}`;
-                router.push(`/details${queryString}`);
-              }}
-            >
+            <div className="relative">
               <img
                 className="rounded-lg"
                 src={activity.image}

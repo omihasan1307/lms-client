@@ -6,11 +6,7 @@ function Overview({ data }: any) {
     <div>
       <h2 className="text-xl font-extrabold">About</h2>
       <p className="mt-3 pr-8 text-base text-[#010A15B2]">
-        Explore Rome's museums, architecture and art with this hop-on, hop-off
-        tour. Purchase a ticket and discover the city's charms at your leisure
-        while riding on a cheerful pink double-decker bus. Don the provided
-        headphones and enjoy recorded audio commentary in 13 languages for the 8
-        stops.
+        {data?.description || ""}
       </p>
       <h2 className="text-xl font-extrabold mt-3">Overview</h2>
       <div className="flex flex-wrap  lg:w-4/5  sm:mb-2 -mx-2">
