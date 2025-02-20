@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetProductDetails = (type: string | null, id: number) => {
   return useQuery({
-    queryKey: ["PRODUCT_LIST", type],
+    queryKey: ["PRODUCT_LIST", type, id],
     queryFn: () => getProductDetails(type, id),
   });
 };

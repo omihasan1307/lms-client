@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="flex h-screen bg-white">
       {/* Sidebar */}
-      <SidebarLayout/>
+      <SidebarLayout children={undefined}/>
       <div className="flex flex-col flex-1">
         {/* Main Content */}
         <main className="p-4 bg-white dark:bg-gray-900">{children}</main>

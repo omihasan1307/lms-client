@@ -37,6 +37,7 @@ function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
         </h2>
+        <Link href="/products">Products</Link>
         <Link href="/blog">Blogs</Link>
         <h2 className="flex gap-1 items-center">
           English <ChevronDown className="w-5 h-5" />
