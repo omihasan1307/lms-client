@@ -6,7 +6,6 @@ import Link from "next/link";
 async function getProducts() {
   try {
     const res = await axios.get(`${envConfig.baseApi}/shop/products/`);
-
     return res.data;
   } catch (error) {
     return { data: { results: [] } };

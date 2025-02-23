@@ -10,19 +10,36 @@ const axiosInstance = axios.create({
   // },
 });
 
-axiosInstance.interceptors.request.use(
-  function (config) {
-    // const cookiesStore = cookies();
-    const accessToken = localStorage.get("accessToken")?.value;
+// axiosInstance.interceptors.request.use(
+//   function (config) {
+//     // const cookiesStore = cookies();
+//     const accessToken = localStorage.get("accessToken")?.value;
 
-    if (accessToken) {
-      config.headers.Authorization = accessToken;
+//     console.log("accessToken", accessToken);
+
+//     if (accessToken) {
+//       config.headers.Authorization = accessToken;
+//     }
+//     return config;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    if (typeof window !== "undefined") {
+      // Ensure it's client-side before accessing localStorage
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (accessToken) {
+        config.headers.Authorization = `JWT ${accessToken}`;
+      }
     }
     return config;
   },
-  function (error) {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(

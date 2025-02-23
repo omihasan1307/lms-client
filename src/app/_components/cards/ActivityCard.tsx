@@ -10,7 +10,7 @@ function ActivityCard() {
   return (
     <div>
       <div className="w-full py-20 px-20 flex items-center justify-between">
-        {data?.data?.map((activity: any) => (
+        {data?.data?.slice(0, 6)?.map((activity: any) => (
           <div
             key={activity.id}
             className="bg-white relative transition duration-500 rounded-lg"
@@ -52,7 +52,7 @@ function ActivityCard() {
             </div>
 
             <div className="py-6 rounded-lg bg-white">
-              <h1 className="text-[#010A15] font-bold text-xl mb-3 hover:text-gray-900 hover:cursor-pointer">
+              <h1 className="text-[#010A15] font-bold text-xl mb-3  hover:text-gray-900 hover:cursor-pointer">
                 {activity.title}
               </h1>
               <div className="flex gap-2 items-center">

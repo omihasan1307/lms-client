@@ -9,6 +9,7 @@ import { ApiBaseMysql } from "@/Helper/ApiBase";
 import Loading from "../_components/Loading";
 import GoogleSvg from "../_components/Svg/GoogleSvg";
 import { toast } from "react-toastify";
+import Link from "next/link";
 // Define types
 interface FormData {
   email: string;
@@ -22,6 +23,11 @@ const redirectUri = "http://localhost:3000/login/";
 const apiBaseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [googleError, setGoogleError] = useState<GoogleError | null>(null);
@@ -111,125 +117,223 @@ const Login = () => {
     fetchData();
   }, [router]);
   return (
-    <div>
-      {loading || (googleLoading && <Loading />)}
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50 to-orange-100">
-        <div className="card p-4 shadow-lg rounded-lg bg-white border border-gray-200 w-full max-w-md space-y-8 bg-gradient-to-b from-orange-50 to-orange-100/0">
-          {error && <div className="text-center text-red-500">{error}</div>}
-          {googleError && (
-            <div className="text-center text-red-500">
-              {googleError.message}
+    <div className="bg-gray-50 font-sans min-h-screen flex flex-col items-center justify-center py-6 px-4">
+      <div className="max-w-md w-full">
+        <Link href="/">
+          <img
+            src="https://readymadeui.com/readymadeui.svg"
+            alt="logo"
+            className="w-40 mb-8 mx-auto block"
+          />
+        </Link>
+
+        <div className="p-8 rounded-2xl bg-white shadow">
+          <h2 className="text-gray-800 text-center text-2xl font-bold">
+            Sign in
+          </h2>
+          <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">
+                User name
+              </label>
+              <input
+                name="username"
+                type="text"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
+                placeholder="Enter user name"
+              />
             </div>
-          )}
-          <div>
-            <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
-              Log in to your account
-            </h2>
-          </div>
-          {/* Google Sign-in Button */}
-          <div className="text-center mt-4">
-            <button
-              onClick={continueWithGoogle}
-              className="group relative w-full justify-center py-2 px-4 text-sm font-medium rounded-md text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 hover:border-gray-400 hover:shadow-md transition duration-300 ease-in-out block"
-            >
-              <div className="flex justify-between items-center w-full">
-                <div className="flex items-center">
-                  <GoogleSvg />
-                  <span className="ml-2">Sign in with Google</span>
-                </div>
-                <div className="flex items-center">
-                  <HiArrowLongRight className="text-xl" />
-                </div>
-              </div>
-            </button>
-          </div>
-          <form className="mt-8 space-y-6 card-body" onSubmit={handleSubmit}>
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mb-4">
-                <label
-                  htmlFor="email-address"
-                  className="text-sm text-gray-900 mb-1 block font-semibold text-left w-full"
-                >
-                  Email address
-                </label>
+
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">
+                Password
+              </label>
+              <div className="relative flex items-center">
                 <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="password"
-                  className="text-sm text-gray-900 mb-1 block font-semibold text-left w-full"
-                >
-                  Password
-                </label>
-                <input
-                  id="password"
                   name="password"
-                  type="password"
-                  autoComplete="current-password"
+                  type={showPassword ? "text" : "password"}
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                  onChange={handleInputChange}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
+                  placeholder="Enter password"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 cursor-pointer"
+                >
+                  {showPassword ? "🙈" : "👁"}
+                </button>
               </div>
             </div>
-            <div className="flex items-center justify-between mb-4">
+
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center">
                 <input
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-3 text-sm text-gray-800"
                 >
                   Remember me
                 </label>
               </div>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-            <div className="mt-4">
-              <button
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              <Link
+                href="/forgot-password"
+                className="text-sm text-blue-600 hover:underline font-semibold"
               >
-                {loading ? "Loading..." : "Log in"}
-              </button>
+                Forgot your password?
+              </Link>
             </div>
-            <div className="mt-4">
-              <p className="text-center text-sm text-gray-900">
-                Don't have an account?{" "}
-                <a
-                  href="/signup"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Sign up
-                </a>
-              </p>
-            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            >
+              Sign in
+            </button>
+
+            <p className="text-gray-800 text-sm mt-8 text-center">
+              Don't have an account?{" "}
+              <Link
+                href="/register"
+                className="text-blue-600 hover:underline ml-1 font-semibold"
+              >
+                Register here
+              </Link>
+            </p>
           </form>
         </div>
       </div>
     </div>
+    // <div>
+    //   {loading || (googleLoading && <Loading />)}
+    //   <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50 to-orange-100">
+    //     <div className="card p-4 shadow-lg rounded-lg bg-white border border-gray-200 w-full max-w-md space-y-8 bg-gradient-to-b from-orange-50 to-orange-100/0">
+    //       {error && <div className="text-center text-red-500">{error}</div>}
+    //       {googleError && (
+    //         <div className="text-center text-red-500">
+    //           {googleError.message}
+    //         </div>
+    //       )}
+    //       <div>
+    //         <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
+    //           Log in to your account
+    //         </h2>
+    //       </div>
+    //       <div className="text-center mt-4">
+    //         <button
+    //           onClick={continueWithGoogle}
+    //           className="group relative w-full justify-center py-2 px-4 text-sm font-medium rounded-md text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 hover:border-gray-400 hover:shadow-md transition duration-300 ease-in-out block"
+    //         >
+    //           <div className="flex justify-between items-center w-full">
+    //             <div className="flex items-center">
+    //               <GoogleSvg />
+    //               <span className="ml-2">Sign in with Google</span>
+    //             </div>
+    //             <div className="flex items-center">
+    //               <HiArrowLongRight className="text-xl" />
+    //             </div>
+    //           </div>
+    //         </button>
+    //       </div>
+    //       <form className="mt-8 space-y-6 card-body" onSubmit={handleSubmit}>
+    //         <input type="hidden" name="remember" defaultValue="true" />
+    //         <div className="rounded-md shadow-sm -space-y-px">
+    //           <div className="mb-4">
+    //             <label
+    //               htmlFor="email-address"
+    //               className="text-sm text-gray-900 mb-1 block font-semibold text-left w-full"
+    //             >
+    //               Email address
+    //             </label>
+    //             <input
+    //               id="email-address"
+    //               name="email"
+    //               type="email"
+    //               autoComplete="email"
+    //               required
+    //               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+    //               placeholder="Email address"
+    //               onChange={handleInputChange}
+    //             />
+    //           </div>
+    //           <div className="mb-4">
+    //             <label
+    //               htmlFor="password"
+    //               className="text-sm text-gray-900 mb-1 block font-semibold text-left w-full"
+    //             >
+    //               Password
+    //             </label>
+    //             <input
+    //               id="password"
+    //               name="password"
+    //               type="password"
+    //               autoComplete="current-password"
+    //               required
+    //               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+    //               placeholder="Password"
+    //               onChange={handleInputChange}
+    //             />
+    //           </div>
+    //         </div>
+    //         <div className="flex items-center justify-between mb-4">
+    //           <div className="flex items-center">
+    //             <input
+    //               id="remember-me"
+    //               name="remember-me"
+    //               type="checkbox"
+    //               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+    //             />
+    //             <label
+    //               htmlFor="remember-me"
+    //               className="ml-2 block text-sm text-gray-900"
+    //             >
+    //               Remember me
+    //             </label>
+    //           </div>
+    //           <div className="text-sm">
+    //             <a
+    //               href="#"
+    //               className="font-medium text-indigo-600 hover:text-indigo-500"
+    //             >
+    //               Forgot your password?
+    //             </a>
+    //           </div>
+    //         </div>
+    //         <div className="mt-4">
+    //           <button
+    //             type="submit"
+    //             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    //           >
+    //             {loading ? "Loading..." : "Log in"}
+    //           </button>
+    //         </div>
+    //         <div className="mt-4">
+    //           <p className="text-center text-sm text-gray-900">
+    //             Don't have an account?{" "}
+    //             <a
+    //               href="/signup"
+    //               className="font-medium text-indigo-600 hover:text-indigo-500"
+    //             >
+    //               Sign up
+    //             </a>
+    //           </p>
+    //         </div>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 export default Login;

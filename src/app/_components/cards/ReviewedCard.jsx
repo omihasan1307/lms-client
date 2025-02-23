@@ -57,18 +57,18 @@ function ReviewedCard() {
         {/* Price Section */}
       </div>
       <div className="pl-8 ">
-        <div class="mt-4 pl-2 bg-white  border-l-4 border-[#DD2509]">
+        <div className="mt-4 pl-2 bg-white  border-l-4 border-[#DD2509]">
           {/* <!-- Review Title --> */}
-          <h2 class="text-lg font-semibold mt-2">
+          <h2 className="text-lg font-semibold mt-2">
             Your rating & review of this service
           </h2>
           {/* <!-- Rating and Time --> */}
-          <div class="flex items-center  gap-4">
+          <div className="flex items-center  gap-4">
             {/* <!-- Stars --> */}
-            <div class="flex space-x-1 text-yellow-500">
+            <div className="flex space-x-1 text-yellow-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
+                className="h-5 w-5"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -76,7 +76,7 @@ function ReviewedCard() {
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
+                className="h-5 w-5"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -84,11 +84,11 @@ function ReviewedCard() {
               </svg>
               {/* <!-- Repeat this SVG five times for a five-star rating --> */}
             </div>
-            <span class="text-gray-500 text-sm border-l-2 pl-4">2 mins ago</span>
+            <span className="text-gray-500 text-sm border-l-2 pl-4">2 mins ago</span>
           </div>
 
           {/* <!-- Review Text --> */}
-          <p class="text-gray-700 mt-2 text-[15px]">
+          <p className="text-gray-700 mt-2 text-[15px]">
             An amazing welcome to my first time in Rome, a efficient way to
             enjoy and efficiently transported thru the main attraction of Rome
             in one day. Lovely way you can explore on your own the areas and
