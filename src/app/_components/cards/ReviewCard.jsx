@@ -7,9 +7,11 @@ import ReviewPopUpCard from "./ReviewPopUpCard";
 
 function ReviewCard({ reviewData }) {
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewedID, setReviewedID] = useState(0);
 
   // Extract data from reviewData
   const {
+    id,
     user,
     product_title,
     product_image,
@@ -30,7 +32,8 @@ function ReviewCard({ reviewData }) {
   };
 
   // Function to handle the button click
-  const handleWriteReviewClick = () => {
+  const handleWriteReviewClick = (id) => {
+    setReviewedID(id);
     setShowReviewForm(true);
   };
 
@@ -73,7 +76,7 @@ function ReviewCard({ reviewData }) {
 
           {/* Write Review Button */}
           <div
-            onClick={handleWriteReviewClick}
+            onClick={() => handleWriteReviewClick(id)}
             className="flex flex-col justify-center items-end sm:items-end mt-4 sm:mt-0 sm:pl-4 pt-4 sm:pt-0"
           >
             <p className="px-5 py-2 bg-black rounded-md text-white font-bold text-[12px] cursor-pointer">
@@ -84,7 +87,10 @@ function ReviewCard({ reviewData }) {
       </div>
 
       {showReviewForm && (
-        <ReviewPopUpCard onClose={() => setShowReviewForm(false)} />
+        <ReviewPopUpCard
+          reviewedID={reviewedID}
+          onClose={() => setShowReviewForm(false)}
+        />
       )}
     </div>
   );

@@ -43,7 +43,7 @@ const MyReviews = () => {
       ) : (
         <p>No reviews found.</p>
       )}
-      <ReviewedCard />
+      {/* <ReviewedCard /> */}
     </div>
   );
 };

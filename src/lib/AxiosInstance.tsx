@@ -30,11 +30,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      // Ensure it's client-side before accessing localStorage
       const accessToken = localStorage.getItem("accessToken");
 
       if (accessToken) {
-        config.headers.Authorization = `JWT ${accessToken}`;
+        config.headers.Authorization = ` ${accessToken}`;
       }
     }
     return config;
