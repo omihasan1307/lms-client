@@ -5,7 +5,8 @@ import TanStackProviders from "@/providers/TanStackProvider";
 import { AuthProvider } from "@/Helper/authContext";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

@@ -2,79 +2,91 @@
 import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useGetProduct } from "@/hooks/get.hooks";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function ActivityCard() {
   const router = useRouter();
   const { data } = useGetProduct();
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2500,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 3, slidesToScroll: 1 },
+      },
+      {
+        breakpoint: 600,
+        settings: { slidesToShow: 1, slidesToScroll: 1 },
+      },
+      {
+        breakpoint: 480,
+        settings: { slidesToShow: 1, slidesToScroll: 1 },
+      },
+    ],
+  };
+
   return (
-    <div>
-      <div className="w-full py-20 px-20 flex items-center justify-between">
+    <div className="w-full py-10 px-5 md:px-10">
+      <Slider {...settings}>
         {data?.data?.slice(0, 6)?.map((activity: any) => (
-          <div
-            key={activity.id}
-            className="bg-white relative transition duration-500 rounded-lg"
-            onClick={() => {
-              const queryString = `?type=${activity?.api?.api_type}&id=${activity?.api?.id}`;
-              router.push(`/details${queryString}`);
-            }}
-          >
-            <div className="relative">
-              <img
-                className="rounded-lg"
-                src={activity.image}
-                alt={activity.title}
-              />
-
-              {/* Top-right corner: Price tag */}
-              <div className="absolute top-2 right-2 py-2 px-4">
-                <AiFillHeart
-                  size={24}
-                  color={activity.is_favorite ? "red" : "gray"}
+          <div key={activity.id} className="p-2">
+            <div className="bg-white relative transition duration-500 rounded-lg shadow-md cursor-pointer">
+              <div className="relative w-full h-60">
+                <img
+                  className="rounded-lg w-full h-full object-cover"
+                  src={activity.image}
+                  alt={activity.title}
                 />
+                <div className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-sm">
+                  <AiFillHeart
+                    size={24}
+                    color={activity.is_favorite ? "red" : "gray"}
+                  />
+                </div>
+                <div className="absolute top-2 left-2 flex items-center bg-black bg-opacity-50 text-white px-3 py-1 rounded-lg">
+                  <AiFillStar size={20} color="#FF9900" />
+                  <p className="ml-2 font-bold text-sm">4.5</p>
+                  <p className="ml-1 text-xs opacity-80">(1500 reviews)</p>
+                </div>
               </div>
-
-              {/* Top-left corner: Rating */}
-              <div className="absolute top-2 left-2 flex items-center py-1 px-3">
-                <AiFillStar size={24} color="#FF9900" />
-                <p className="ml-2 text-white font-bold text-[14px]">4.5</p>
-                <p className="ml-1 text-[#FFFFFFB2] text-[12px]">
-                  (1500 reviews)
-                </p>
-              </div>
-
-              {/* Bottom-left corner of the image: Label */}
-              <div className="absolute bottom-2 left-2 py-2 px-4">
-                <span className="text-xs bg-[#DD2509] text-white rounded-md p-2">
-                  Adventure
-                </span>
-              </div>
-            </div>
-
-            <div className="py-6 rounded-lg bg-white">
-              <h1 className="text-[#010A15] font-bold text-xl mb-3  hover:text-gray-900 hover:cursor-pointer">
-                {activity.title}
-              </h1>
-              <div className="flex gap-2 items-center">
-                <p className="text-[#010A15] tracking-wide">1 day</p>
-                <p>.</p>
-                <p className="text-[#010A15] tracking-wide">Small group</p>
-              </div>
-              <div className="flex gap-3 mt-5 items-center">
-                <p className="text-[#DD2509] text-[14px] font-bold">
-                  From{" "}
-                  <span className="text-[22px]">
-                    €{activity.discounted_price}
-                  </span>
-                </p>
-                <p className="text-[#010A15] text-[14px] font-normal">
-                  Per Person
-                </p>
+              <div
+                className="py-4 px-4"
+                onClick={() => {
+                  const queryString = `?type=${activity?.api?.api_type}&id=${activity?.api?.id}`;
+                  router.push(`/details${queryString}`);
+                }}
+              >
+                <h1 className="text-[#010A15] font-bold text-lg mb-2 hover:text-gray-900">
+                  {activity.title}
+                </h1>
+                <div className="flex gap-2 items-center text-sm text-gray-600">
+                  <p>1 day</p>
+                  <p>•</p>
+                  <p>Small group</p>
+                </div>
+                <div className="flex gap-2 mt-4 items-center">
+                  <p className="text-red-600 text-base font-bold">
+                    From{" "}
+                    <span className="text-xl">
+                      €{activity.discounted_price}
+                    </span>
+                  </p>
+                  <p className="text-gray-600 text-sm">Per Person</p>
+                </div>
               </div>
             </div>
           </div>
         ))}
-      </div>
+      </Slider>
     </div>
   );
 }

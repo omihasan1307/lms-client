@@ -6,6 +6,7 @@ import Footer from "./_components/Footer";
 import TrendingHeading from "./_components/TrendingHeading";
 import MainLayout from "@/layout/MainLayout";
 
+
 export default function Home() {
   return (
     <MainLayout>

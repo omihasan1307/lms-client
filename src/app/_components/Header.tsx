@@ -124,6 +124,9 @@ import { useAuth } from "@/Helper/authContext";
 function Header() {
   const { user, isAuthenticated, logout } = useAuth();
 
+
+console.log("user",user);
+
   const handleLogout = () => {
     logout();
   };
