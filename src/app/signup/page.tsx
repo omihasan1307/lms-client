@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "../_components/Loading";
-import { ApiBaseMysql } from "@/Helper/ApiBase";
+import envConfig from "@/lib/env.config";
+import { toast } from "react-toastify";
+
 interface FormData {
   email: string;
   password: string;
@@ -13,6 +15,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -29,12 +32,13 @@ const Signup = () => {
     setError(null);
     try {
       const response = await axios.post(
-        `${ApiBaseMysql}/auth/users/`,
+        `${envConfig.baseApi}/auth/users/`,
         formData
       );
       if (response.status === 201) {
-        const referrer = document.referrer || "/";
-        router.push(referrer);
+        toast.success(`Sign up Successfully`);
+        // const referrer = document.referrer || "/";
+        router.push("/");
       }
     } catch (error: any) {
       setError(

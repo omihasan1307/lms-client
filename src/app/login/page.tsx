@@ -4,10 +4,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import { ApiBaseMysql } from "@/Helper/ApiBase";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import envConfig from "@/lib/env.config";
+import Loading from "../loading";
+import GoogleSvg from "../_components/Svg/GoogleSvg";
+import { HiArrowLongRight } from "react-icons/hi2";
 
 // Define types
 interface FormData {
@@ -16,8 +18,12 @@ interface FormData {
 }
 
 const redirectUri = "http://localhost:3000/login/";
-const apiBaseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
+
+interface GoogleError {
+  message: string;
+  error: any;
+}
 
 const Login = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -28,8 +34,11 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const [googleLoading, setGoogleLoading] = useState<boolean>(false);
+  const [googleError, setGoogleError] = useState<GoogleError | null>(null);
   const router = useRouter();
 
   // Handle input change for formData
@@ -58,6 +67,7 @@ const Login = () => {
       toast.success(`Login Successfully`);
       router.push(callbackUrl);
     } catch (err: any) {
+      setError(err.response?.data?.message || "An error occurred during login");
       toast.error("Login Failed");
     } finally {
       setLoading(false);
@@ -65,13 +75,30 @@ const Login = () => {
   };
 
   // Redirect user if already logged in
-  useEffect(() => {
-    const token = Cookies.get("access_token");
-    if (token) {
-      router.push(callbackUrl);
-      // router.push("/");
+  // useEffect(() => {
+  //   const token = Cookies.get("access_token");
+  //   if (token) {
+  //     // router.push(callbackUrl);
+  //     // router.push("/");
+  //   }
+  // }, []);
+
+  const continueWithGoogle = async () => {
+    try {
+      setGoogleError(null);
+      setGoogleLoading(true);
+      const res = await axios.get(
+        `${envConfig.baseApi}/auth/o/google-oauth2/?redirect_uri=${redirectUri}`
+      );
+      window.location.replace(res.data.data.authorization_url);
+    } catch (err: any) {
+      setGoogleError({
+        message: "An error occurred while initiating Google OAuth",
+        error: err,
+      });
+      setGoogleLoading(false);
     }
-  }, []);
+  };
 
   return (
     <div className="bg-gray-50 font-sans min-h-screen flex flex-col items-center justify-center py-6 px-4">
@@ -166,7 +193,7 @@ const Login = () => {
             <p className="text-gray-800 text-sm mt-8 text-center">
               Don't have an account?{" "}
               <Link
-                href="/register"
+                href="/signup"
                 className="text-blue-600 hover:underline ml-1 font-semibold"
               >
                 Register here
@@ -174,6 +201,30 @@ const Login = () => {
             </p>
           </form>
         </div>
+
+        {/* Google Sign-in Button */}
+        <div className="text-center mt-4">
+          <button
+            onClick={continueWithGoogle}
+            className="group relative w-full justify-center py-2 px-4 text-sm font-medium rounded-md text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-gray-300 hover:border-gray-400 hover:shadow-md transition duration-300 ease-in-out block"
+          >
+            <div className="flex justify-between items-center w-full">
+              <div className="flex items-center">
+                <GoogleSvg />
+                <span className="ml-2">Sign in with Google</span>
+              </div>
+              <div className="flex items-center">
+                <HiArrowLongRight className="text-xl" />
+              </div>
+            </div>
+          </button>
+        </div>
+        {loading || (googleLoading && <Loading />)}
+
+        {error && <div className="text-center text-red-500">{error}</div>}
+        {googleError && (
+          <div className="text-center text-red-500">{googleError.message}</div>
+        )}
       </div>
     </div>
   );

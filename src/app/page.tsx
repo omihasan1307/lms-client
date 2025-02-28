@@ -32,10 +32,6 @@ export default function Home() {
 
       <div className="lg:px-20 px-10 py-10">
         <ReelsCard />
-        {/* <ReelsCard />
-        <ReelsCard />
-        <ReelsCard />
-        <ReelsCard /> */}
       </div>
     </MainLayout>
   );
