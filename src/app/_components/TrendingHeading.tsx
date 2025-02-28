@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const TrendingHeading = () => {
   return (
-    <div className="flex items-center justify-between px-20 bg-gradient-to-r from-gray-50 to-white  rounded-xl mb-0 mt-40">
+    <div className="flex items-center justify-between  bg-gradient-to-r from-gray-50 to-white  rounded-xl mb-0 mt-40">
       {/* Text Heading */}
       <div>
         <h2 className="text-[36px] font-bold text-[##010A15]">Trending 2023</h2>

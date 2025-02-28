@@ -19,27 +19,19 @@ function ActivityCard() {
     autoplay: true,
     autoplaySpeed: 2500,
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3, slidesToScroll: 1 },
-      },
-      {
-        breakpoint: 600,
-        settings: { slidesToShow: 1, slidesToScroll: 1 },
-      },
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1, slidesToScroll: 1 },
-      },
+      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1 } },
+      { breakpoint: 600, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
     ],
   };
 
   return (
-    <div className="w-full py-10 px-5 md:px-10">
+    <div className="w-full py-10   ">
       <Slider {...settings}>
-        {data?.data?.slice(0, 6)?.map((activity: any) => (
-          <div key={activity.id} className="p-2">
-            <div className="bg-white relative transition duration-500 rounded-lg shadow-md cursor-pointer">
+        {data?.data?.map((activity: any) => (
+          <div key={activity.id} className="p-2 h-full ">
+            <div className="bg-white relative transition duration-500 rounded-lg shadow-md cursor-pointer h-full flex flex-col">
+              {/* Image Section */}
               <div className="relative w-full h-60">
                 <img
                   className="rounded-lg w-full h-full object-cover"
@@ -58,21 +50,27 @@ function ActivityCard() {
                   <p className="ml-1 text-xs opacity-80">(1500 reviews)</p>
                 </div>
               </div>
+
+              {/* Content Section */}
               <div
-                className="py-4 px-4"
+                className="py-4 px-4 flex flex-col flex-grow justify-between"
                 onClick={() => {
                   const queryString = `?type=${activity?.api?.api_type}&id=${activity?.api?.id}`;
                   router.push(`/details${queryString}`);
                 }}
               >
-                <h1 className="text-[#010A15] font-bold text-lg mb-2 hover:text-gray-900">
-                  {activity.title}
-                </h1>
-                <div className="flex gap-2 items-center text-sm text-gray-600">
-                  <p>1 day</p>
-                  <p>•</p>
-                  <p>Small group</p>
+                <div>
+                  <h1 className="text-[#010A15] font-bold text-lg mb-2 hover:text-gray-900">
+                    {activity.title}
+                  </h1>
+                  <div className="flex gap-2 items-center text-sm text-gray-600">
+                    <p>1 day</p>
+                    <p>•</p>
+                    <p>Small group</p>
+                  </div>
                 </div>
+
+                {/* Price Section */}
                 <div className="flex gap-2 mt-4 items-center">
                   <p className="text-red-600 text-base font-bold">
                     From{" "}

@@ -1,19 +1,60 @@
 import React from "react";
 
 function ReelsCard() {
-  return (
-    <div className="flex justify-center items-center mb-20 w-60">
-      <div className="flex flex-col justify-between w-60  rounded-lg  sm:w-96 h-96 bg-white bg-center text-gray-800 shadow-md overflow-hidden cursor-pointer bg-[url('https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg')] bg-cover">
-        
-        {/* Empty div to push the content to the bottom */}
-        <div className="flex-grow"></div>
+  const reelsData = [
+    {
+      id: 1,
+      title: "Sunset",
+      subtitle: "Beautiful evening view",
+      image:
+        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
+    },
+    {
+      id: 2,
+      title: "Mountain View",
+      subtitle: "Peaceful scenery",
+      image:
+        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
+    },
+    {
+      id: 3,
+      title: "Ocean Waves",
+      subtitle: "Relaxing sea waves",
+      image:
+        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
+    },
+    {
+      id: 4,
+      title: "Forest Path",
+      subtitle: "A peaceful walk in the woods",
+      image:
+        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
+    },
+  ];
 
-        {/* Bottom Content */}
-        <div className="p-4 flex flex-col mb-1">
-          <h3 className="text-[15px] font-bold pb-2 text-white">Sunset</h3>
-          <p className="truncate text-[#FFFFFFB2] text-sm font-normal">Subtitle Is Here</p>
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 ">
+      {reelsData.map((reel) => (
+        <div
+          key={reel.id}
+          className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+        >
+          {/* Background Image */}
+          <div
+            className="w-full h-80 bg-cover bg-center transition-transform duration-300 hover:scale-105"
+            style={{ backgroundImage: `url(${reel.image})` }}
+          ></div>
+
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 hover:bg-opacity-30"></div>
+
+          {/* Content */}
+          <div className="absolute bottom-0 p-4 text-white">
+            <h3 className="text-lg font-bold">{reel.title}</h3>
+            <p className="text-sm opacity-80">{reel.subtitle}</p>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }
