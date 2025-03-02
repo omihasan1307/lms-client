@@ -63,12 +63,15 @@ function Header() {
         <h2 className="flex gap-1 items-center">
           USD(US$) <ChevronDown className="w-5 h-5" />
         </h2>
-        <Image
-          src="/shopping-cart.png"
-          width={20}
-          height={20}
-          alt="shoppingcart logo"
-        />
+        <Link href="/cart">
+          {/* <Image
+            src="/shopping-cart.png"
+            width={20}
+            height={20}
+            alt="shoppingcart logo"
+          />{" "} */}
+          <Icon icon="carbon:shopping-bag" className="w-5 h-5" />
+        </Link>
         <h2>
           <Heart className="w-5 h-5" />
         </h2>

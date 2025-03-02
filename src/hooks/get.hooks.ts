@@ -1,4 +1,5 @@
 import {
+  getBookingList,
   getProductDetails,
   getProductList,
   getProfile,
@@ -22,5 +23,11 @@ export const useGetProfile = () => {
   return useQuery({
     queryKey: ["PROFILE"],
     queryFn: getProfile,
+  });
+};
+export const useGetBookingList = () => {
+  return useQuery({
+    queryKey: ["BOOKING_LIST"],
+    queryFn: getBookingList,
   });
 };

@@ -35,3 +35,12 @@ export const getProfile = async () => {
     throw new Error(error);
   }
 };
+export const getBookingList = async () => {
+  try {
+    const response = await axiosInstance.get(`/shop/bookings/`);
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
