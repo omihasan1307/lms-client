@@ -1,31 +1,30 @@
 import axios from "axios";
-// import { cookies } from "next/headers";
-import envConfig from "./env.config";
+import Cookies from "js-cookie";
+import { ApiBaseMysql } from "@/Helper/ApiBase";
 
 const axiosInstance = axios.create({
-  baseURL: "http://gt.codecanvascreation.com",
+  baseURL: ApiBaseMysql,
   // baseURL: envConfig.baseApi,
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// axiosInstance.interceptors.request.use(
-//   function (config) {
-//     // const cookiesStore = cookies();
-//     const accessToken = localStorage.get("accessToken")?.value;
+axiosInstance.interceptors.request.use(
+  function (config) {
+    const accessToken = Cookies.get("access_token");
 
-//     console.log("accessToken", accessToken);
+    console.log("accessToken", accessToken);
 
-//     if (accessToken) {
-//       config.headers.Authorization = accessToken;
-//     }
-//     return config;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
-//   }
-// );
+    if (accessToken) {
+      config.headers.Authorization = accessToken;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -40,12 +39,22 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 axiosInstance.interceptors.response.use(
   function (response) {
     return response;
   },
   function (error) {
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      Cookies.remove("access_token");
+      localStorage.removeItem("accessToken");
+
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
+    }
     return Promise.reject(error);
   }
 );

@@ -1,60 +1,76 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
-function ReelsCard() {
-  const reelsData = [
-    {
-      id: 1,
-      title: "Sunset",
-      subtitle: "Beautiful evening view",
-      image:
-        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
-    },
-    {
-      id: 2,
-      title: "Mountain View",
-      subtitle: "Peaceful scenery",
-      image:
-        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
-    },
-    {
-      id: 3,
-      title: "Ocean Waves",
-      subtitle: "Relaxing sea waves",
-      image:
-        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
-    },
-    {
-      id: 4,
-      title: "Forest Path",
-      subtitle: "A peaceful walk in the woods",
-      image:
-        "https://cdn.pixabay.com/photo/2023/10/13/17/10/mushroom-8313142_1280.jpg",
-    },
-  ];
+interface Reel {
+  id: number;
+  title: string;
+  video: string;
+  caption: string;
+}
+
+function ReelsCard({ data }: { data: Reel[] }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center">
+      {data.map((reel) => (
+        <ReelItem key={reel.id} reel={reel} />
+      ))}
+    </div>
+  );
+}
+
+function ReelItem({ reel }: { reel: Reel }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      videoRef.current.muted = false;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.muted = true;
+    }
+  };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 ">
-      {reelsData.map((reel) => (
-        <div
-          key={reel.id}
-          className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-        >
-          {/* Background Image */}
-          <div
-            className="w-full h-80 bg-cover bg-center transition-transform duration-300 hover:scale-105"
-            style={{ backgroundImage: `url(${reel.image})` }}
-          ></div>
+    <div
+      className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer w-full max-w-[320px] h-[80vh] mx-auto"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Video Background */}
+      <video
+        ref={videoRef}
+        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        src={reel.video}
+        muted
+        loop
+        playsInline
+      />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 hover:bg-opacity-30"></div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-30 transition-opacity duration-300 hover:bg-opacity-10"></div>
 
-          {/* Content */}
-          <div className="absolute bottom-0 p-4 text-white">
-            <h3 className="text-lg font-bold">{reel.title}</h3>
-            <p className="text-sm opacity-80">{reel.subtitle}</p>
-          </div>
-        </div>
-      ))}
+      {/* Content */}
+      <div className="absolute bottom-4 left-4 p-4 text-white">
+        <h3 className="text-xl font-bold">{reel.title}</h3>
+        <p className="text-sm opacity-80">{reel.caption}</p>
+      </div>
+
+      {/* Mute/Unmute Button */}
+      <button
+        className="absolute top-4 right-4 bg-gray-800 bg-opacity-70 p-2 rounded-full text-white"
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsMuted(!isMuted);
+          if (videoRef.current) videoRef.current.muted = !isMuted;
+        }}
+      >
+        {isMuted ? "🔇" : "🔊"}
+      </button>
     </div>
   );
 }

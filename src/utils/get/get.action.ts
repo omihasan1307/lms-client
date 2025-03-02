@@ -1,4 +1,6 @@
 // "use server";
+import { ApiBaseMysql } from "@/Helper/ApiBase";
+import axiosInstance from "@/lib/AxiosInstance";
 import envConfig from "@/lib/env.config";
 import axios from "axios";
 
@@ -18,7 +20,8 @@ export const getProductDetails = async (type: string | null, id: Number) => {
 
 export const getProductList = async () => {
   try {
-    const response = await axios.get(`${envConfig.baseApi}/shop/tours/`);
+    const response = await axiosInstance.get(`/shop/tours/`);
+    console.log(response)
     return response?.data;
   } catch (error: any) {
     console.log(error);
