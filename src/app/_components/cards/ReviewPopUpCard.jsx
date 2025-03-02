@@ -77,9 +77,10 @@ function ReviewPopUpCard({ onClose, reviewedID }) {
           <button
             onClick={handleSubmit}
             className="py-2 px-6 text-white bg-red-600 rounded-md font-bold"
-            disabled={isPending}
+            // disabled={isPending}
           >
-            {isPending ? "Submitting..." : "Done"}
+            {/* {isPending ? "Submitting..." : "Done"} */}
+            Done
           </button>
         </div>
       </div>
