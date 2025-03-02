@@ -20,7 +20,7 @@ export const getProductDetails = async (type: string | null, id: Number) => {
 export const getProductList = async () => {
   try {
     const response = await axiosInstance.get(`/shop/tours/`);
-    console.log(response)
+    console.log(response);
     return response?.data;
   } catch (error: any) {
     console.log(error);
@@ -45,3 +45,27 @@ export const getBookingList = async () => {
     throw new Error(error);
   }
 };
+
+const fetchBlogs = async (data: any) => {
+  try {
+    const params = {
+      search: data.search ? data.search : "",
+      page: data.page ? data.page : "",
+      page_size: data.page_size ? data.page_size : 10,
+    };
+    const response = await axiosInstance.get(`/blog/blogs/`, { params });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+const fetchBlogDetail = async (id: any) => {
+  try {
+    const response = await axiosInstance.get(`/blog/blogs/${id}/`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export { fetchBlogs, fetchBlogDetail };

@@ -25,7 +25,7 @@ interface Blog {
 function BlogCard({ data }: { data: Blog[] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {data.map((blog) => (
+      {data?.map((blog) => (
         <div
           key={blog.id}
           className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
@@ -45,7 +45,7 @@ function BlogCard({ data }: { data: Blog[] }) {
 
           {/* Blog Content */}
           <div className="p-4">
-            <Link href={`/blogs/${blog.slug}`}>
+            <Link href={`/blog/${blog.id}`}>
               <h2 className="text-xl font-bold mb-2 hover:text-blue-600 transition-colors duration-300">
                 {blog.title}
               </h2>

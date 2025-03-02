@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -10,6 +10,7 @@ import envConfig from "@/lib/env.config";
 import Loading from "../loading";
 import GoogleSvg from "../_components/Svg/GoogleSvg";
 import { HiArrowLongRight } from "react-icons/hi2";
+import { ApiBaseMysql } from "@/Helper/ApiBase";
 
 // Define types
 interface FormData {
@@ -55,11 +56,11 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${envConfig.baseApi}/auth/jwt/create/`,
+        `${ApiBaseMysql}/auth/jwt/create/`,
         formData
       );
       const { access } = response.data.data;
-      localStorage.setItem("accessToken", "JWT " + access);
+      localStorage.setItem("accessToken",access);
       Cookies.set("access_token", access);
       const decodedToken: any = jwtDecode(access);
       Cookies.set("user_id", decodedToken.user_id);
