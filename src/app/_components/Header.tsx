@@ -1,10 +1,8 @@
-
-
 "use client";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Heart } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   DropdownMenu,
@@ -16,16 +14,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useAuth } from "@/Helper/authContext";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 function Header() {
   const { user, isAuthenticated, logout } = useAuth();
+  const [token, setToken] = useState<string | null>(null);
 
-  // const token = localStorage.getItem("accessToken");
-
-  // console.log("token", token);
-  console.log("user", user);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem("accessToken"));
+    }
+  }, [token]);
 
   const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setToken("");
     logout();
   };
 
@@ -71,12 +74,12 @@ function Header() {
         </h2>
 
         {/* Conditional Rendering for Login/Logout */}
-        {isAuthenticated ? (
+        {token ? (
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="flex gap-1 items-center cursor-pointer">
-                ssssssssssssssss
-                {/* <User className="w-5 h-5" />  */}
+                <Icon icon="line-md:account" className="w-5 h-5" />
+
                 <ChevronDown className="w-5 h-5" />
               </div>
             </DropdownMenuTrigger>
@@ -87,10 +90,7 @@ function Header() {
                 <Link href="/profile">Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout}>
-                <div className="flex items-center gap-2">
-                  {/* <LogOut className="w-4 h-4" />  */}
-                  Logout
-                </div>
+                <div className="flex items-center gap-2">Logout</div>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -104,11 +104,6 @@ function Header() {
             </Link>
           </div>
         )}
-
-        {/* <h2 className="flex gap-1 items-center">
-          Log In <ChevronDown className="w-5 h-5" />
-        </h2>
-        <Button className="px-5 py-2">Sign Up</Button> */}
       </div>
     </div>
   );

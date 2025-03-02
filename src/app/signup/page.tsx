@@ -5,27 +5,33 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "../_components/Loading";
 import envConfig from "@/lib/env.config";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
-interface FormData {
-  email: string;
-  password: string;
-}
 const Signup = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    phone: "",
+    country: "",
     email: "",
     password: "",
+    confirmPassword: "",
+    address: "",
+    zipCode: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -41,6 +47,17 @@ const Signup = () => {
         router.push("/");
       }
     } catch (error: any) {
+      console.log(
+        error?.response?.data?.details?.email?.[0] ||
+          error?.response?.data?.details?.password?.[0],
+        "error"
+      );
+
+      toast.success(
+        error?.response?.data?.details?.email?.[0] ||
+          error?.response?.data?.details?.email?.[0] ||
+          "An error occurred. Please try again."
+      );
       setError(
         error?.response?.data?.details?.email?.[0] ||
           error?.response?.data?.details?.password?.[0] ||
@@ -53,112 +70,134 @@ const Signup = () => {
   return (
     <div>
       {loading && <Loading />}
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50 to-orange-100">
-        <div className="card p-4 shadow-lg rounded-lg bg-white border border-gray-200 w-full max-w-md space-y-8 bg-gradient-to-b from-orange-50 to-orange-100/0">
-          {error && <div className="text-center text-red-500">{error}</div>}
-          <div>
-            <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
-              Create your account
+      <div className="bg-gray-50 font-sans min-h-screen flex flex-col items-center justify-center py-6 px-4">
+        {error && <div className="text-center text-red-500">{error}</div>}
+        <div className="max-w-md w-full">
+          <Link href="/">
+            <img
+              src="https://readymadeui.com/readymadeui.svg"
+              alt="logo"
+              className="w-40 mb-8 mx-auto block"
+            />
+          </Link>
+
+          <div className="p-8 rounded-2xl bg-white shadow">
+            <h2 className="text-gray-800 text-center text-2xl font-bold">
+              Sign Up
             </h2>
-          </div>
-          <div className="text-center mt-4"></div>
-          <form className="mt-8 space-y-6 card-body" onSubmit={handleSubmit}>
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm space-y-4">
-              <div className="mb-4">
-                <label
-                  htmlFor="email-address"
-                  className="text-sm text-gray-900 mb-1 block font-semibold text-left w-full"
-                >
-                  Email address
-                </label>
+            <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-4">
                 <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  name="firstName"
+                  type="text"
+                  placeholder="First Name"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                  onChange={handleInputChange}
+                  onChange={handleChange}
+                  className="w-full border px-4 py-3 rounded-md"
+                />
+                <input
+                  name="middleName"
+                  type="text"
+                  placeholder="Middle Name (Optional)"
+                  onChange={handleChange}
+                  className="w-full border px-4 py-3 rounded-md"
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="password"
-                  className="text-sm text-gray-900 mb-1 block font-semibold text-left w-full"
-                >
-                  Password
-                </label>
+              <input
+                name="lastName"
+                type="text"
+                placeholder="Last Name"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              />
+              <input
+                name="phone"
+                type="tel"
+                placeholder="Phone Number"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              />
+              <select
+                name="country"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              >
+                <option value="">Select Country</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">UK</option>
+              </select>
+              <input
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              />
+              <div className="relative">
                 <input
-                  id="password"
                   name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="terms"
-                  name="terms"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                   required
+                  onChange={handleChange}
+                  className="w-full border px-4 py-3 rounded-md"
                 />
-                <label
-                  htmlFor="terms"
-                  className="ml-2 block text-sm text-gray-900"
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-3"
                 >
-                  I agree to the{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Terms
-                  </a>
-                </label>
+                  {showPassword ? "🙈" : "👁"}
+                </button>
               </div>
-            </div>
-            <div className="mt-4">
+              <input
+                name="confirmPassword"
+                type="password"
+                placeholder="Re-type Password"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              />
+              <input
+                name="address"
+                type="text"
+                placeholder="Address"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              />
+              <input
+                name="zipCode"
+                type="text"
+                placeholder="Zip Code"
+                required
+                onChange={handleChange}
+                className="w-full border px-4 py-3 rounded-md"
+              />
+
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full py-3 px-4 text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
               >
-                Sign up
+                Sign Up
               </button>
-            </div>
-            <div className="mt-4">
-              <p className="text-center text-sm text-gray-900">
+
+              <p className="text-gray-800 text-sm mt-4 text-center">
                 Already have an account?{" "}
-                <a
-                  href="/login"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                <Link
+                  href="/signin"
+                  className="text-blue-600 hover:underline font-semibold"
                 >
-                  Log in
-                </a>
+                  Sign in here
+                </Link>
               </p>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
