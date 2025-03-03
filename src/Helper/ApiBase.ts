@@ -1,1 +1,1 @@
-export const ApiBaseMysql = "http://localhost:8000";
+export const ApiBaseMysql = "http://gt.codecanvascreation.com";

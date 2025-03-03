@@ -25,9 +25,9 @@ export const useGetProfile = () => {
     queryFn: getProfile,
   });
 };
-export const useGetBookingList = () => {
+export const useGetBookingList = (status?: string) => {
   return useQuery({
     queryKey: ["BOOKING_LIST"],
-    queryFn: getBookingList,
+    queryFn: () => getBookingList({ status }),
   });
 };

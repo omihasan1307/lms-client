@@ -36,9 +36,11 @@ export const getProfile = async () => {
     throw new Error(error);
   }
 };
-export const getBookingList = async () => {
+export const getBookingList = async (params = {}) => {
   try {
-    const response = await axiosInstance.get(`/shop/bookings/`);
+    const response = await axiosInstance.get(`/shop/bookings/`, {
+      params,
+    });
     return response?.data;
   } catch (error: any) {
     console.log(error);

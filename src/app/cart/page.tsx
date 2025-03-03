@@ -7,7 +7,7 @@ import BookingCard from "../_components/cards/BookingCard";
 import EmptyHistory from "../profile/booking-history/EmptyHistory";
 
 const CartPage = () => {
-  const { data: bookingList } = useGetBookingList();
+  const { data: bookingList } = useGetBookingList("Reserved");
 
   return (
     <MainLayout>

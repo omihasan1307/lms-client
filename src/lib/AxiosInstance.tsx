@@ -27,12 +27,12 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
-      // Cookies.remove("access_token");
-      // localStorage.removeItem("accessToken");
+      Cookies.remove("access_token");
+      localStorage.removeItem("accessToken");
 
-      // if (typeof window !== "undefined") {
-      //   window.location.href = "/login";
-      // }
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }
