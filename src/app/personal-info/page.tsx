@@ -2,8 +2,6 @@
 
 import MainLayout from "@/layout/MainLayout";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import SelectedCartItem from "../cart/SelectedCartItem";
 import ProfileSettings from "../profile/_components/ProfileSettings";
 import { useGetBookingById } from "@/hooks/get.hooks"; // Create this hook
 import SelectedContinueItem from "./SelectedContinueItem";

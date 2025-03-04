@@ -59,19 +59,6 @@ export const checkAvailibility = async (id: any, data: any) => {
   }
 };
 
-export const checkAvailibility = async (id: any, data: any) => {
-  try {
-    const response = await axiosInstance.post(
-      `/shop/tours/g/${id}/available/`,
-      data
-    );
-    return response?.data;
-  } catch (error: any) {
-    console.log(error);
-    throw new Error(error);
-  }
-};
-
 const fetchBlogs = async (data: any) => {
   try {
     const params = {
