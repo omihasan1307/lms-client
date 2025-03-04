@@ -12,7 +12,7 @@ function Gallery({ data }: any) {
           className="rounded-lg w-full h-auto object-cover"
           height={450}
           width={700}
-          src={data.images[0]?.url}
+          src={data.images[0]?.image}
           alt={`gallery-1`}
         />
       </div>
@@ -25,7 +25,7 @@ function Gallery({ data }: any) {
               className="rounded-lg w-full h-auto object-cover"
               height={200}
               width={560}
-              src={image.url}
+              src={image.image}
               alt={`gallery-${index + 2}`}
             />
           </div>

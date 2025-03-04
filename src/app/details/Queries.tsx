@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { format } from "path";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { TbPointFilled } from "react-icons/tb";
@@ -14,49 +12,75 @@ const weekDays = [
   "Saturday",
 ];
 
-function Queries({ data }: any) {
-  // const schedule = data?.schedules?.map((sch: any) =>
-  //   sch?.available_days?.map((day: any) => day.name)
-  // );
+interface QueryData {
+  inclusions?: { id: number; name: string }[];
+  exclusions?: { id: number; name: string }[];
+  bookingInformation?: string;
+  contactInformation?: string;
+  cancellationPolicy?: string;
+  termsAndConditions?: string;
+  schedules?: {
+    start_time: string;
+    end_time: string;
+    available_days: { id: number; name: string }[];
+  }[];
+  audio_guides_languages?: { keyword: string }[];
+  booklet_languages?: { keyword: string }[];
+  name?: string;
+  reference_code?: string;
+  maximum_group_size?: number;
+  is_wheelchair_accessible?: boolean;
+  skip_the_line?: boolean;
+  valid_for?: number;
+  has_fixed_time?: boolean;
+  audio_guide?: boolean;
+  booklet?: boolean;
+  is_private?: boolean;
+  drop_off_type?: string;
+  meeting_point_type?: string;
+  transfer?: {
+    transferType: string;
+    pickupLocation: string;
+    dropoffLocation: string;
+    vehicleType: string;
+    luggageAllowance: string;
+  };
+  rental?: {
+    rentalItemName: string;
+    rentalType: string;
+    rentalPeriod: string;
+    ageRequirement: string;
+    damagePolicy: string;
+  };
+  notSuitable?: { id: number; condition: string }[];
+  notAllowed?: { id: number; restriction: string }[];
+  mustCarryItems?: { id: number; item: string }[];
+}
 
+function Queries({ data }: { data: QueryData }) {
   const schedule = data?.schedules?.[0];
 
   if (!schedule) return <p>No schedule available</p>;
 
-  // Get available days from the schedule
-  const availableDays = schedule.available_days.map((day: any) => day.name);
+  const availableDays = schedule.available_days.map((day) => day.name);
 
   return (
     <div>
       <h2 className="text-xl font-extrabold mt-6">Additional Queries</h2>
-      <p className="text-[#DD2509] text-[15px] font-bold mt-3">
-        What’s Included & Not Included
-      </p>
 
-      {/* ------------------ */}
-
+      {/* Inclusions & Exclusions */}
       <div>
-        {/* Inclusions & Exclusions Container */}
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          What’s Included & Not Included
+        </p>
         <div className="flex flex-wrap bg-[#F4F4F4] rounded-lg mt-3">
-          {/* Inclusion Header */}
+          {/* Inclusions */}
           <div className="w-full sm:w-1/2">
             <div className="flex gap-2 p-4 items-center">
               <TbPointFilled className="text-[#69BA43] flex-shrink-0 text-md" />
               <p className="text-[15px] text-[#010A15] font-bold">Included</p>
             </div>
-          </div>
-
-          {/* Exclusion Header */}
-          <div className="w-full sm:w-1/2">
-            <div className="flex gap-2 p-4 items-center">
-              <TbPointFilled className="text-[#9B341D] flex-shrink-0 text-md" />
-              <p className="text-[15px] text-[#010A15] font-bold">Exclusions</p>
-            </div>
-          </div>
-
-          {/* Map Inclusions */}
-          <div className="w-full sm:w-1/2">
-            {data?.inclusions?.map((item: any) => (
+            {data?.inclusions?.map((item) => (
               <div key={item.id} className="flex gap-2 p-4 items-center">
                 <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
                 <p className="text-[15px] text-[#010A15B2]">{item.name}</p>
@@ -64,9 +88,13 @@ function Queries({ data }: any) {
             ))}
           </div>
 
-          {/* Map Exclusions */}
+          {/* Exclusions */}
           <div className="w-full sm:w-1/2">
-            {data?.exclusions?.map((item: any) => (
+            <div className="flex gap-2 p-4 items-center">
+              <TbPointFilled className="text-[#9B341D] flex-shrink-0 text-md" />
+              <p className="text-[15px] text-[#010A15] font-bold">Exclusions</p>
+            </div>
+            {data?.exclusions?.map((item) => (
               <div key={item.id} className="flex gap-2 p-4 items-center">
                 <RxCross2 className="text-[#9B341D] flex-shrink-0 text-md" />
                 <p className="text-[15px] text-[#010A15B2]">{item.name}</p>
@@ -76,169 +104,142 @@ function Queries({ data }: any) {
         </div>
       </div>
 
-      {/* ------------------ */}
-
-      {/* booking Information */}
+      {/* Booking Information */}
       <div>
         <p className="text-[#DD2509] text-[15px] font-bold mt-3">
-          Booking information
+          Booking Information
         </p>
-
-        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
-          {data?.bookingInformation}
+        <div className="mt-3 px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.bookingInformation || "No booking information available."}
         </div>
       </div>
-      {/* contact Information */}
+
+      {/* Contact Information */}
       <div>
         <p className="text-[#DD2509] text-[15px] font-bold mt-3">
           Contact Information
         </p>
-
-        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
-          {data?.contactInformation}
+        <div className="mt-3 px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.contactInformation || "No contact information available."}
         </div>
       </div>
 
-      {/* cancellation Policy */}
+      {/* Cancellation Policy */}
       <div>
         <p className="text-[#DD2509] text-[15px] font-bold mt-3">
           Cancellation Policy
         </p>
-
-        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
-          {data?.cancellationPolicy}
+        <div className="mt-3 px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.cancellationPolicy || "No cancellation policy available."}
         </div>
       </div>
 
-      {/* terms And Conditions */}
+      {/* Terms and Conditions */}
       <div>
         <p className="text-[#DD2509] text-[15px] font-bold mt-3">
-          Terms And Conditions
+          Terms and Conditions
         </p>
-
-        <div className="mt-3  px-5 bg-[#F4F4F4] rounded-lg py-5">
-          {data?.termsAndConditions}
+        <div className="mt-3 px-5 bg-[#F4F4F4] rounded-lg py-5">
+          {data?.termsAndConditions || "No terms and conditions available."}
         </div>
       </div>
 
-      {/* Additional information */}
-      <p className="text-[#DD2509] text-[15px] font-bold mt-3">
-        Additional information
-      </p>
-      <div className="mt-3 bg-[#F4F4F4] rounded-lg py-5">
-        <ul className="list-none pl-5 text-[#010A15B2] text-[15px] pr-2">
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>Confirmation will be received at time of booking</p>
-          </li>
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>
-              <span className="text-black font-bold">Important:</span> Rome is a
-              lively capital city and therefore political events, demonstrations
-              and celebrations can disrupt the itinerary at any time, especially
-              during special events, holidays summer and at weekends. While
-              every effort is made to ensure a smooth and frequent service there
-              may be delays, reduced frequency and route alterations due to
-              traffic congestion and road closures
-            </p>
-          </li>
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>No heart problems or other serious medical conditions</p>
-          </li>
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>Most travellers can participate</p>
-          </li>
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>
-              From April to October The Hop on Hop off bus operates everyday
-              from 8:30AM to 6:45PM (First bus from Largo Peretti, Last bus
-              6:45PM from Termini). Buses depart every 15/20 minutes from
-              Termini Station (Stop 1)
-            </p>
-          </li>
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>
-              From November to March the Hop on Hop off bus operates every day
-              from 9:00 AM to 5:00 PM (First bus from Largo Peretti, Last bus
-              5:30 PM from Termini). Buses depart every 15/20 minutes from
-              Termini Station (Stop 1)
-            </p>
-          </li>
-          <li className="mb-2 flex items-start">
-            <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
-            <p>
-              Authorized by the Municipality of Rome, our hop-on-hop-off route
-              adheres to the city's decorum. Explore Rome effortlessly with
-              conveniently located bus stops near prominent monuments and key
-              points of interest.
-            </p>
-          </li>
-        </ul>
-      </div>
-      {/* What’s Included & Not Included */}
-      <p className="text-[#DD2509] text-[15px] font-bold mt-3">
-        What’s Included & Not Included
-      </p>
-      <div className="bg-[#F4F4F4]  rounded-lg px-2 py-1 mt-3">
-        <div className="sm:w-1/2 w-full mt-3">
-          <div className="flex gap-2 py-2 px-2 h-full items-center">
-            <TbPointFilled className="text-[#69BA43] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
-              <p className="text-[15px] text-[#010A15] font-bold">
-                Dress Code (for all genders):
+      {/* Additional Information */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Additional Information
+        </p>
+        <div className="mt-3 bg-[#F4F4F4] rounded-lg py-5">
+          <ul className="list-none pl-5 text-[#010A15B2] text-[15px] pr-2">
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>Confirmation will be received at time of booking</p>
+            </li>
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>
+                <span className="text-black font-bold">Important:</span> Rome is a
+                lively capital city, and political events, demonstrations, and
+                celebrations can disrupt the itinerary at any time, especially
+                during special events, holidays, summer, and weekends.
               </p>
-            </div>
-          </div>
-        </div>
-        <div className="sm:w-1/2 w-full">
-          <div className="flex pb-2 gap-2 px-2 h-full items-center">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
-              <p className="text-[15px] text-[#010A15B2]">
-                Knees and shoulders must be covered
+            </li>
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>No heart problems or other serious medical conditions</p>
+            </li>
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>Most travelers can participate</p>
+            </li>
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>
+                From April to October, the Hop-on Hop-off bus operates every day
+                from 8:30 AM to 6:45 PM. Buses depart every 15/20 minutes from
+                Termini Station (Stop 1).
               </p>
-            </div>
-          </div>
-        </div>
-        <div className="sm:w-1/2 w-full">
-          <div className="flex pb-2 gap-2 px-2 h-full items-center">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
-              <p className="text-[15px] text-[#010A15B2]">
-                No clothing with rips, holes, or transparent material{" "}
+            </li>
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>
+                From November to March, the Hop-on Hop-off bus operates every day
+                from 9:00 AM to 5:00 PM. Buses depart every 15/20 minutes from
+                Termini Station (Stop 1).
               </p>
-            </div>
-          </div>
-        </div>
-        <div className="sm:w-1/2 w-full">
-          <div className="flex pb-2 gap-2 px-2 h-full items-center">
-            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />{" "}
-            {/* Set fixed size */}
-            <div>
-              <p className="text-[15px] text-[#010A15B2]">
-                No hats or sunglasses worn inside{" "}
+            </li>
+            <li className="mb-2 flex items-start">
+              <span className="text-[#69BA43] text-2xl leading-none mr-2">•</span>
+              <p>
+                Authorized by the Municipality of Rome, our Hop-on Hop-off route
+                adheres to the city's decorum. Explore Rome effortlessly with
+                conveniently located bus stops near prominent monuments and key
+                points of interest.
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
-      {/* Opening hours */}
 
+      {/* Dress Code */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">Dress Code</p>
+        <div className="bg-[#F4F4F4] rounded-lg px-2 py-1 mt-3">
+          <div className="flex gap-2 py-2 px-2 items-center">
+            <TbPointFilled className="text-[#69BA43] flex-shrink-0 text-md" />
+            <p className="text-[15px] text-[#010A15] font-bold">
+              Dress Code (for all genders):
+            </p>
+          </div>
+          <div className="flex gap-2 px-2 items-center">
+            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
+            <p className="text-[15px] text-[#010A15B2]">
+              Knees and shoulders must be covered
+            </p>
+          </div>
+          <div className="flex gap-2 px-2 items-center">
+            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
+            <p className="text-[15px] text-[#010A15B2]">
+              No clothing with rips, holes, or transparent material
+            </p>
+          </div>
+          <div className="flex gap-2 px-2 items-center">
+            <IoCheckmarkOutline className="text-[#69BA43] flex-shrink-0 text-md" />
+            <p className="text-[15px] text-[#010A15B2]">
+              No hats or sunglasses worn inside
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Opening Hours */}
       <div>
         <p className="text-[#DD2509] text-[15px] font-bold mt-3">
           Opening Hours
         </p>
         <div className="text-[15px] text-[#010A15B2] my-3 space-y-3 bg-[#F4F4F4] p-5 rounded-lg">
           {weekDays.map((day) => {
-            const isOpen = availableDays?.includes(day);
+            const isOpen = availableDays.includes(day);
             return (
               <div
                 key={day}
@@ -247,12 +248,9 @@ function Queries({ data }: any) {
                 <p className="font-bold">{day}</p>
                 <p>
                   {isOpen ? (
-                    <p>
-                      {" "}
-                      {schedule?.start_time} - {schedule?.end_time}{" "}
-                    </p>
+                    `${schedule.start_time} - ${schedule.end_time}`
                   ) : (
-                    <p className="text-red-400">Closed</p>
+                    <span className="text-red-400">Closed</span>
                   )}
                 </p>
               </div>
@@ -260,6 +258,177 @@ function Queries({ data }: any) {
           })}
         </div>
       </div>
+
+      {/* Additional Sections */}
+      <div>
+        <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+          Tour Details
+        </p>
+        <div className="mt-3 bg-[#F4F4F4] rounded-lg p-5">
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Name:</span> {data?.name}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Reference Code:</span>{" "}
+            {data?.reference_code}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Maximum Group Size:</span>{" "}
+            {data?.maximum_group_size}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Wheelchair Accessible:</span>{" "}
+            {data?.is_wheelchair_accessible ? "Yes" : "No"}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Skip the Line:</span>{" "}
+            {data?.skip_the_line ? "Yes" : "No"}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Valid For:</span> {data?.valid_for} days
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Fixed Time:</span>{" "}
+            {data?.has_fixed_time ? "Yes" : "No"}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Audio Guide:</span>{" "}
+            {data?.audio_guide ? "Available" : "Not Available"}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Booklet:</span>{" "}
+            {data?.booklet ? "Available" : "Not Available"}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Private Tour:</span>{" "}
+            {data?.is_private ? "Yes" : "No"}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Drop-off Type:</span>{" "}
+            {data?.drop_off_type}
+          </p>
+          <p className="text-[15px] text-[#010A15B2]">
+            <span className="font-bold">Meeting Point Type:</span>{" "}
+            {data?.meeting_point_type}
+          </p>
+        </div>
+      </div>
+
+      {/* Transfer Details */}
+      {data?.transfer && (
+        <div>
+          <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+            Transfer Details
+          </p>
+          <div className="mt-3 bg-[#F4F4F4] rounded-lg p-5">
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Transfer Type:</span>{" "}
+              {data.transfer.transferType}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Pickup Location:</span>{" "}
+              {data.transfer.pickupLocation}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Drop-off Location:</span>{" "}
+              {data.transfer.dropoffLocation}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Vehicle Type:</span>{" "}
+              {data.transfer.vehicleType}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Luggage Allowance:</span>{" "}
+              {data.transfer.luggageAllowance}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Rental Details */}
+      {data?.rental && (
+        <div>
+          <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+            Rental Details
+          </p>
+          <div className="mt-3 bg-[#F4F4F4] rounded-lg p-5">
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Rental Item:</span>{" "}
+              {data.rental.rentalItemName}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Rental Type:</span>{" "}
+              {data.rental.rentalType}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Rental Period:</span>{" "}
+              {data.rental.rentalPeriod}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Age Requirement:</span>{" "}
+              {data.rental.ageRequirement}
+            </p>
+            <p className="text-[15px] text-[#010A15B2]">
+              <span className="font-bold">Damage Policy:</span>{" "}
+              {data.rental.damagePolicy}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Not Suitable */}
+      {data?.notSuitable && data.notSuitable.length > 0 && (
+        <div>
+          <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+            Not Suitable For
+          </p>
+          <div className="mt-3 bg-[#F4F4F4] rounded-lg p-5">
+            <ul className="list-disc list-inside">
+              {data.notSuitable.map((item) => (
+                <li key={item.id} className="text-[15px] text-[#010A15B2]">
+                  {item.condition}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* Not Allowed */}
+      {data?.notAllowed && data.notAllowed.length > 0 && (
+        <div>
+          <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+            Not Allowed
+          </p>
+          <div className="mt-3 bg-[#F4F4F4] rounded-lg p-5">
+            <ul className="list-disc list-inside">
+              {data.notAllowed.map((item) => (
+                <li key={item.id} className="text-[15px] text-[#010A15B2]">
+                  {item.restriction}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* Must Carry Items */}
+      {data?.mustCarryItems && data.mustCarryItems.length > 0 && (
+        <div>
+          <p className="text-[#DD2509] text-[15px] font-bold mt-3">
+            Must Carry Items
+          </p>
+          <div className="mt-3 bg-[#F4F4F4] rounded-lg p-5">
+            <ul className="list-disc list-inside">
+              {data.mustCarryItems.map((item) => (
+                <li key={item.id} className="text-[15px] text-[#010A15B2]">
+                  {item.item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

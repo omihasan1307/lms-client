@@ -17,14 +17,31 @@ function Details() {
   const type = searchParams.get("type");
   const id = searchParams.get("id");
 
-  const { data: tourData } = useGetProductDetails(type, id as any);
+  const { data: tourData, isLoading } = useGetProductDetails(type, id as any);
 
-  console.log(tourData);
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="px-20 flex justify-center items-center h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (!tourData?.data) {
+    return (
+      <MainLayout>
+        <div className="px-20 flex justify-center items-center h-screen">
+          <p className="text-xl text-gray-700">No data available.</p>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
-      <div className="px-20">
-        {/* Pass tour data to components */}
+      <div className="px-20">x
         <Heading data={tourData?.data} />
         <Gallery data={tourData?.data} />
         <div className="flex w-full">

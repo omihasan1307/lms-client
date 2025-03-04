@@ -20,3 +20,16 @@ export const updatedProfileToDb = async (data: any) => {
     throw new Error(`Review Error : ${error?.message}`);
   }
 };
+
+export const bookActivity = async (data: any) => {
+  try {
+    const response = await axiosInstance.post(
+      `/shop/tours/g/create/bookings/`,
+      data
+    );
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

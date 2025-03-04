@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import envConfig from "@/lib/env.config";
-import Loading from "../loading";
 import GoogleSvg from "../_components/Svg/GoogleSvg";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { ApiBaseMysql } from "@/Helper/ApiBase";
@@ -60,7 +59,7 @@ const Login = () => {
         formData
       );
       const { access } = response.data.data;
-      localStorage.setItem("accessToken",access);
+      localStorage.setItem("accessToken", access);
       Cookies.set("access_token", access);
       const decodedToken: any = jwtDecode(access);
       Cookies.set("user_id", decodedToken.user_id);
@@ -75,14 +74,13 @@ const Login = () => {
     }
   };
 
-  // Redirect user if already logged in
-  // useEffect(() => {
-  //   const token = Cookies.get("access_token");
-  //   if (token) {
-  //     // router.push(callbackUrl);
-  //     // router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = Cookies.get("access_token");
+    if (token) {
+      router.push(callbackUrl);
+      router.push("/");
+    }
+  }, []);
 
   const continueWithGoogle = async () => {
     try {
@@ -212,7 +210,9 @@ const Login = () => {
             <div className="flex justify-between items-center w-full">
               <div className="flex items-center">
                 <GoogleSvg />
-                <span className="ml-2">Sign in with Google</span>
+                <span className="ml-2">
+                  {googleLoading ? "Loading" : "Sign in with Google"}
+                </span>
               </div>
               <div className="flex items-center">
                 <HiArrowLongRight className="text-xl" />
@@ -220,7 +220,7 @@ const Login = () => {
             </div>
           </button>
         </div>
-        {loading || (googleLoading && <Loading />)}
+        {/* {loading || (googleLoading && <Loading />)} */}
 
         {error && <div className="text-center text-red-500">{error}</div>}
         {googleError && (
