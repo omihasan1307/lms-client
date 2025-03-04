@@ -47,6 +47,18 @@ export const getBookingList = async (params = {}) => {
     throw new Error(error);
   }
 };
+export const checkAvailibility = async (id: any, data: any) => {
+  try {
+    const response = await axiosInstance.post(
+      `/shop/tours/g/${id}/available/`,
+      data
+    );
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
 
 export const checkAvailibility = async (id: any, data: any) => {
   try {
