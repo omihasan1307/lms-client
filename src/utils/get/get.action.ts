@@ -20,7 +20,6 @@ export const getProductDetails = async (type: string | null, id: Number) => {
 export const getProductList = async () => {
   try {
     const response = await axiosInstance.get(`/shop/tours/`);
-    console.log(response);
     return response?.data;
   } catch (error: any) {
     console.log(error);
