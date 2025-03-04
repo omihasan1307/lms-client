@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import axios from "axios";
 import MainLayout from "@/layout/MainLayout";
 import Expect from "./Expect";
 import Form from "./Form";
@@ -41,7 +39,7 @@ function Details() {
 
   return (
     <MainLayout>
-      <div className="px-20">x
+      <div className="px-20">
         <Heading data={tourData?.data} />
         <Gallery data={tourData?.data} />
         <div className="flex w-full">

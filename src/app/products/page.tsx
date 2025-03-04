@@ -47,7 +47,7 @@ const ProductList = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
   const [productList, setProductList] = useState([]);
-
+console.log(productList,'productList')
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       setSearch(value);

@@ -89,8 +89,8 @@ export default function Home() {
       )}
       <div className="lg:px-20 px-10 py-10">
         <Heading
-          title="Reels"
-          description="Check out our latest reels"
+          title="Blogs"
+          description="Check out our latest blogs"
           showButtons={false}
         />
         {data?.data?.blogs && <BlogCard data={data?.data?.blogs} />}

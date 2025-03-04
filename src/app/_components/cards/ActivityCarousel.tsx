@@ -42,11 +42,17 @@ function ActivityCarousel({ data }: { data: any[] }) {
                     color={activity.is_favorite ? "red" : "gray"}
                   />
                 </div>
-                <div className="absolute top-2 left-2 flex items-center bg-black bg-opacity-50 text-white px-3 py-1 rounded-lg">
-                  <AiFillStar size={20} color="#FF9900" />
-                  <p className="ml-2 font-bold text-sm">4.5</p>
-                  <p className="ml-1 text-xs opacity-80">(1500 reviews)</p>
-                </div>
+                {activity?.total_reviews > 0 && (
+                  <div className="absolute top-2 left-2 flex items-center bg-black bg-opacity-50 text-white px-3 py-1 rounded-lg">
+                    <AiFillStar size={20} color="#FF9900" />
+                    <p className="ml-2 font-bold text-sm">
+                      {activity?.avg_rating?.toFixed(1)}
+                    </p>
+                    <p className="ml-1 text-xs opacity-80">
+                      ({activity?.total_reviews} reviews)
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Content Section */}
