@@ -1,19 +1,26 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const SelectedCartItem = ({ selectedBookingCart }: any) => {
+const SelectedContinueItem = ({ selectedBookingCart }: any) => {
   const router = useRouter();
 
   const handleCheckout = () => {
     if (selectedBookingCart?.api_category && selectedBookingCart?.id) {
       router.push(
-        `/personal-info?api-type=${selectedBookingCart.api_category}&id=${selectedBookingCart.id}`
+        `/confirm-checkout?api-type=${selectedBookingCart.api_category}&id=${selectedBookingCart.id}`
       );
     }
   };
+
+  // Calculate total adults and children
+  const adults = selectedBookingCart?.participants?.filter(
+    (p: any) => p.participant_type === "Adult"
+  );
+  const children = selectedBookingCart?.participants?.filter(
+    (p: any) => p.participant_type === "Child"
+  );
 
   return (
     <div>
@@ -51,16 +58,20 @@ const SelectedCartItem = ({ selectedBookingCart }: any) => {
                     ).toLocaleDateString()}
                   </p>
                   <p>⏳ {selectedBookingCart.duration}</p>
-                  <p>
-                    👨‍👩‍👧‍👦 {selectedBookingCart.total_persons} Adults x €
-                    {selectedBookingCart.adult_price}
-                  </p>
-                  {selectedBookingCart.child_price && (
-                    <p>
-                      👶 {selectedBookingCart.child_count} Child x €
-                      {selectedBookingCart.child_price}
+
+                  {/* Display adults count & price */}
+                  {adults?.map((adult: any, index: number) => (
+                    <p key={index}>
+                      👨‍👩‍👧‍👦 {adult.quantity} Adults x €{adult.cost_per_unit}
                     </p>
-                  )}
+                  ))}
+
+                  {/* Display children count & price */}
+                  {children?.map((child: any, index: number) => (
+                    <p key={index}>
+                      👶 {child.quantity} Child x €{child.cost_per_unit}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -75,7 +86,7 @@ const SelectedCartItem = ({ selectedBookingCart }: any) => {
             <p className="flex justify-between font-bold">
               Total (1){" "}
               <span className="text-red-600 text-lg">
-                €{selectedBookingCart.total_amount}
+                €{selectedBookingCart?.total_amount}
               </span>
             </p>
             <p className="text-xs text-gray-500">No Additional Charges</p>
@@ -86,7 +97,7 @@ const SelectedCartItem = ({ selectedBookingCart }: any) => {
             onClick={handleCheckout}
             className="w-full bg-red-600 text-white py-2 rounded-md font-bold hover:bg-red-700 transition"
           >
-            Checkout
+            Continue
           </button>
 
           <Link
@@ -105,4 +116,4 @@ const SelectedCartItem = ({ selectedBookingCart }: any) => {
   );
 };
 
-export default SelectedCartItem;
+export default SelectedContinueItem;

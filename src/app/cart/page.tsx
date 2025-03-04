@@ -13,7 +13,6 @@ const CartPage = () => {
   return (
     <MainLayout>
       <div className="mx-10 lg:mx-20 my-10 lg:grid grid-cols-3 gap-5">
-        {/* Booking List */}
         <div className="col-span-2">
           {bookingList?.data?.results?.length > 0 ? (
             <div className="space-y-4">
@@ -36,7 +35,6 @@ const CartPage = () => {
           )}
         </div>
 
-        {/* Selected Booking Details */}
         <div className="col-span-1 bg-white p-4 rounded-md shadow-md border">
           <SelectedCartItem selectedBookingCart={selectedBookingCart} />
         </div>
