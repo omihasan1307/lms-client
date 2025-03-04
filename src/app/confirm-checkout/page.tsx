@@ -19,7 +19,15 @@ const ConfirmCheckout = () => {
     <MainLayout>
       <div className="mx-10 lg:mx-20 my-10 lg:grid grid-cols-3 gap-5">
         <div className="col-span-2">
-            
+          <h1 className="text-xl font-bold ">Your Personal Details</h1>
+          <hr className="my-2" />
+          <div className="border">
+            <h1 className="font-semibold ">
+              {profileData?.first_name} {profileData?.last_name}
+            </h1>
+            <p> {profileData?.email}</p>
+            <p> {profileData?.phone}</p>
+          </div>
         </div>
         <div className="col-span-1">
           <div className="col-span-1">
