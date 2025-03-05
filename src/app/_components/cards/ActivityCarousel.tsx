@@ -4,9 +4,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AiFillHeart, AiFillStar } from "react-icons/ai";
+import Heading from "../Heading";
+import React, { useRef } from "react"; // Import useRef
 
 function ActivityCarousel({ data }: { data: any[] }) {
   const router = useRouter();
+  const sliderRef = useRef<Slider>(null);
 
   const settings = {
     dots: false,
@@ -23,9 +26,29 @@ function ActivityCarousel({ data }: { data: any[] }) {
     ],
   };
 
+  const handlePrev = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickPrev(); 
+    }
+  };
+
+  const handleNext = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickNext();
+    }
+  };
+
   return (
     <div className="py-10">
-      <Slider {...settings}>
+      <Heading
+        title="Trending 2023"
+        description="Sost Brilliant Reasons Entrada should be your one-stop-one"
+        showButtons={true}
+        onPrev={handlePrev}
+        onNext={handleNext}
+      />
+      {/* Attach the ref to the Slider */}
+      <Slider ref={sliderRef} {...settings}>
         {data.map((activity) => (
           <div key={activity.id} className="px-2">
             <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">

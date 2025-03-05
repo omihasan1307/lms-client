@@ -5,9 +5,17 @@ interface HeadingProps {
   title: string;
   description: string;
   showButtons?: boolean;
+  onPrev?: () => void; // Add onPrev prop
+  onNext?: () => void; // Add onNext prop
 }
 
-const Heading = ({ title, description, showButtons = false }: HeadingProps) => {
+const Heading = ({
+  title,
+  description,
+  showButtons = false,
+  onPrev,
+  onNext,
+}: HeadingProps) => {
   return (
     <div className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white rounded-xl mb-10">
       {/* Text Heading */}
@@ -19,10 +27,16 @@ const Heading = ({ title, description, showButtons = false }: HeadingProps) => {
       {/* Navigation Buttons (Conditional) */}
       {showButtons && (
         <div className="flex space-x-2">
-          <button className="p-2 bg-gray-200 rounded-md hover:bg-gray-300">
-            <ArrowLeft className="w-4 h-4 text-gray-600" />
+          <button
+            className="p-2 bg-gray-800 rounded-md hover:bg-gray-900"
+            onClick={onPrev}
+          >
+            <ArrowLeft className="w-4 h-4 text-white" />
           </button>
-          <button className="p-2 bg-gray-800 rounded-md hover:bg-gray-900">
+          <button
+            className="p-2 bg-gray-800 rounded-md hover:bg-gray-900"
+            onClick={onNext}
+          >
             <ArrowRight className="w-4 h-4 text-white" />
           </button>
         </div>

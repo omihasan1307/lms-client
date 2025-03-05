@@ -48,11 +48,6 @@ export default function Home() {
       <div className="lg:px-20 px-10 mt-32">
         {data?.data?.popular_products && (
           <>
-            <Heading
-              title="Trending 2023"
-              description="Sost Brilliant Reasons Entrada should be your one-stop-one"
-              showButtons={true}
-            />
             {data.data.popular_products.length < 4 ? (
               <ActivityList data={data.data.popular_products} />
             ) : (
