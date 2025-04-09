@@ -17,7 +17,7 @@ const Heading = ({
   onNext,
 }: HeadingProps) => {
   return (
-    <div className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white rounded-xl mb-10">
+    <div className="flex items-center justify-between  rounded-xl mb-10">
       {/* Text Heading */}
       <div>
         <h2 className="text-[36px] font-bold text-[#010A15]">{title}</h2>

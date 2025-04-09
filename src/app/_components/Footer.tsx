@@ -12,11 +12,11 @@ import {
 
 function Footer() {
   return (
-    <footer className="text-[#A9AEB9] body-font bg-[#010A15]">
-      <div className=" px-16 py-20 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+    <footer className="text-[#A9AEB9] body-font bg-baseColor">
+      <div className="max-w-screen-2xl mx-auto py-20 flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
           <div className="lg:w-[21%] md:w-1/2 w-full px-4 ">
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3">
               Support
             </h2>
             <nav className="list-none mb-10 text-[15px] font-normal cursor-pointer space-y-2">
@@ -54,12 +54,17 @@ function Footer() {
             </nav>
           </div>
           <div className="lg:w-[10%] md:w-1/2 w-full px-4">
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3">
               Company
             </h2>
             <nav className="list-none mb-10 text-[15px] font-normal cursor-pointer space-y-2">
               <li>
-                <Link href="/about-us" className="text-[#A9AEB9]  hover:text-gray-200">About Us</Link>
+                <Link
+                  href="/about-us"
+                  className="text-[#A9AEB9]  hover:text-gray-200"
+                >
+                  About Us
+                </Link>
               </li>
               <li>
                 <a className="text-[#A9AEB9]  hover:text-gray-200">Careers</a>
@@ -84,7 +89,7 @@ function Footer() {
             </nav>
           </div>
           <div className="lg:w-[19%] md:w-1/2 w-full px-4">
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3">
               Work With Us
             </h2>
             <nav className="list-none mb-10 text-[15px] font-normal cursor-pointer space-y-2">
@@ -104,7 +109,7 @@ function Footer() {
                 </a>
               </li>
             </nav>
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3">
               Ways You can Pay
             </h2>
             <div className="flex flex-col gap-2  items-center md:items-start">
@@ -157,7 +162,7 @@ function Footer() {
             </div>
           </div>
           <div className="lg:w-[20%] md:w-1/2 w-full px-4">
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3">
               Download Mobile App
             </h2>
             <div className=" mb-10  space-y-4 flex flex-col items-center md:items-start">
@@ -178,7 +183,7 @@ function Footer() {
             </div>
           </div>
           <div className="lg:w-[29%]  w-full px-4">
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3 mt-10 lg:mt-0">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3 mt-10 lg:mt-0">
               Follow Us
             </h2>
             <div className="flex gap-4 mt-8 justify-center items-center md:justify-start">
@@ -188,7 +193,7 @@ function Footer() {
               <FaInstagram className="w-6 h-6 text-white" />
               <FaLinkedin className="w-6 h-6 text-white" />
             </div>
-            <h2 className=" font-bold text-[#DD2509] text-[18px] tracking-widest text-sm mb-3 mt-10">
+            <h2 className=" font-bold text-white text-[18px] tracking-widest text-sm mb-3 mt-10">
               Subscribe
             </h2>
             <div className="flex items-center rounded-md border border-gray-600 p-2 bg-[#F4F4F40D]">
@@ -197,7 +202,7 @@ function Footer() {
                 placeholder="Example@yourmail.com"
                 className="bg-transparent flex-grow text-gray-300 placeholder-gray-500 p-2 focus:outline-none focus:ring-0 focus:border-transparent"
               />
-              <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 ml-2">
+              <button className="bg-white text-blue-900 px-4 py-2 rounded-md hover:bg-blue-700 ml-2 hover:text-white duration-300 hover:duration-300">
                 Send Mail
               </button>
             </div>
@@ -206,8 +211,8 @@ function Footer() {
       </div>
 
       <div className=" mx-auto py-2 px-5 text-center text-[#A9AEB9]">
-        <hr className="border-[#A9AEB9] border-t-1 my-4 mx-16" />© 2024 All
-        Copyright Reserve to TourGeeky.
+        <hr className="border-[#A9AEB9] border-t-1 my-4 mx-16" />© 2025 All
+        Copyright Reserve to LMS.
       </div>
     </footer>
   );

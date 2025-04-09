@@ -24,7 +24,7 @@ export const updatedProfileToDb = async (data: any) => {
 export const bookActivity = async (data: any) => {
   try {
     const response = await axiosInstance.post(
-      `/shop/tours/g/create/bookings/`,
+      `/shop/lmss/g/create/bookings/`,
       data
     );
     return response?.data;

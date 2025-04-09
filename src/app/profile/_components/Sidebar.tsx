@@ -1,39 +1,59 @@
-
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const menuItems = [
+// Define menu items for user role
+const userMenuItems = [
   {
-    icon: "/wishlist.png",
-    label: "Wishlist",
+    label: "course List",
     href: "/profile/wishlist",
-  },
-  {
-    icon: "/profilesettings.png",
-    label: "Profile Settings",
-    href: "/profile/settings",
-  },
-  {
-    icon: "/booking.png",
-    label: "Booking History",
-    href: "/profile/booking-history",
-  },
-  {
-    icon: "/reviews.png",
-    label: "My Reviews",
-    href: "/profile/my-reviews",
   },
   {
     icon: "/logout.png",
     label: "Log Out",
-    href: "/logout",
+    href: "/",
+    action: "logout",
   },
 ];
 
-const Sidebar = () => {
-    const pathname = usePathname()
+// Define menu items for admin role
+const adminMenuItems = [
+  {
+    label: "Home",
+    href: "/profile",
+  },
+  {
+    label: "Manage Courses",
+    href: "/profile/admin/course",
+  },
+  {
+    label: "Manage Module",
+    href: "/profile/admin/module",
+  },
+  {
+    label: "Manage Lecture",
+    href: "/profile/admin/lectures",
+  },
+  {
+    icon: "/logout.png",
+    label: "Log Out",
+    href: "/",
+    action: "logout",
+  },
+];
+
+const Sidebar = ({ data, logOutUser }: any) => {
+  const pathname = usePathname();
+  const role = data?.role || "user";
+  const menuItems = role === "admin" ? adminMenuItems : userMenuItems;
+
+  const handleMenuClick = (item: any) => {
+    if (item.action === "logout") {
+      localStorage.removeItem("accessToken");
+      logOutUser();
+    }
+  };
 
   return (
     <aside className="bg-gray-100 p-3 rounded-sm shadow-lg bg-[#010A1508]">
@@ -51,13 +71,16 @@ const Sidebar = () => {
           <Link
             key={item.label}
             href={item.href}
+            onClick={(e) => {
+              if (item.action === "logout") {
+                e.preventDefault();
+                handleMenuClick(item);
+              }
+            }}
             className={`flex items-center font-medium p-3 rounded-lg ${
-            pathname === item.href ? "bg-white" : ""
+              pathname === item.href ? "bg-white" : ""
             }`}
           >
-            <span className="mr-3">
-              <Image src={item.icon} width={18} height={18} alt={`${item.label} icon`} />
-            </span>
             {item.label}
           </Link>
         ))}

@@ -1,9 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Heart } from "lucide-react";
+import { ChevronDown, Heart, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useAuth } from "@/Helper/authContext";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 function Header() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -33,82 +31,103 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center px-20 py-5 font-medium">
-      <Link href="/">
-        <Image src="/logo.png" alt="logo" width={90} height={44} />
-      </Link>
-      <div className="flex gap-8 items-center text-[15px]">
-        <Link href="/">Home</Link>
-        <h2 className="flex gap-1 items-center">
-          Categories{" "}
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <ChevronDown className="w-5 h-5" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem> Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </h2>
-        <Link href="/products">Products</Link>
-        <Link href="/blog">Blogs</Link>
-        <h2 className="flex gap-1 items-center">
-          English <ChevronDown className="w-5 h-5" />
-        </h2>
-        <h2 className="flex gap-1 items-center">
-          USD(US$) <ChevronDown className="w-5 h-5" />
-        </h2>
-        <Link href="/cart">
-          {/* <Image
-            src="/shopping-cart.png"
-            width={20}
-            height={20}
-            alt="shoppingcart logo"
-          />{" "} */}
-          <Icon icon="carbon:shopping-bag" className="w-5 h-5" />
-        </Link>
-        <h2>
-          <Heart className="w-5 h-5" />
-        </h2>
-
-        {/* Conditional Rendering for Login/Logout */}
-        {token ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex gap-1 items-center cursor-pointer">
-                <Icon icon="line-md:account" className="w-5 h-5" />
-
-                <ChevronDown className="w-5 h-5" />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href="/profile">Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleLogout}>
-                <div className="flex items-center gap-2">Logout</div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <div className="flex gap-4">
-            <Link href="/login">
-              <Button variant="ghost">Log In</Button>
-            </Link>
-            <Link href="/signup">
-              <Button className="px-5 py-2">Sign Up</Button>
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/lms-logo.png"
+                alt="logo"
+                width={120}
+                height={48}
+                className=""
+                priority
+              />
             </Link>
           </div>
-        )}
+
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link
+              href="/course"
+              className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-sm"
+            >
+              Courses
+            </Link>
+          </nav>
+
+          {/* User Actions */}
+          <div className="flex items-center space-x-4">
+            <Link
+              href="/cart"
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 relative"
+            >
+              <ShoppingBag className="w-5 h-5 text-gray-700" />
+              <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                0
+              </span>
+            </Link>
+
+            {token ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-1 hover:bg-gray-100"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                      {user?.name?.charAt(0) || "U"}
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-gray-500" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {user?.name || "User"}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="w-full cursor-pointer">
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="text-red-600 focus:text-red-600 focus:bg-red-50 cursor-pointer"
+                  >
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <Link href="/login">
+                  <Button
+                    variant="ghost"
+                    className="text-gray-700 hover:text-blue-600"
+                  >
+                    Log In
+                  </Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 shadow-sm">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
 

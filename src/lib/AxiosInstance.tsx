@@ -1,21 +1,30 @@
 import axios from "axios";
-import Cookies from "js-cookie";
-import { ApiBaseMysql } from "@/Helper/ApiBase";
+import { baseApi } from "@/Helper/ApiBase";
 
 const axiosInstance = axios.create({
-  baseURL: ApiBaseMysql,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: baseApi,
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
+  // headers: {
+  //   "Content-Type": "multipart/form-data",
+  // },
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken =
-      Cookies.get("access_token") || localStorage.getItem("accessToken");
+    let accessToken = "";
+
+    if (typeof window !== "undefined") {
+      const localStorageToken = localStorage.getItem("accessToken");
+
+      if (localStorageToken) {
+        accessToken = localStorageToken;
+      }
+    }
 
     if (accessToken) {
-      config.headers.Authorization = `JWT ${accessToken}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
     return config;
@@ -27,10 +36,9 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
-      Cookies.remove("access_token");
-      localStorage.removeItem("accessToken");
-
+      // Ensure client-side before removing the token
       if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken");
         window.location.href = "/login";
       }
     }

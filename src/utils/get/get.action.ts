@@ -6,20 +6,20 @@ import axios from "axios";
 export const getProductDetails = async (type: string | null, id: Number) => {
   try {
     const response = await axios.get(
-      `${envConfig.baseApi}/shop/tours/${type}/${id}`
+      `${envConfig.baseApi}/shop/lmss/${type}/${id}`
     );
     return response?.data;
   } catch (error: any) {
     console.log(error.response?.data?.error?.message);
     throw new Error(
-      error.response?.data?.error?.message || "Failed to fetch tour Details"
+      error.response?.data?.error?.message || "Failed to fetch lms Details"
     );
   }
 };
 
 export const getProductList = async () => {
   try {
-    const response = await axiosInstance.get(`/shop/tours/`);
+    const response = await axiosInstance.get(`/shop/lmss/`);
     return response?.data;
   } catch (error: any) {
     console.log(error);
@@ -49,7 +49,7 @@ export const getBookingList = async (params = {}) => {
 export const checkAvailibility = async (id: any, data: any) => {
   try {
     const response = await axiosInstance.post(
-      `/shop/tours/g/${id}/available/`,
+      `/shop/lmss/g/${id}/available/`,
       data
     );
     return response?.data;

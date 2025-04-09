@@ -1,12 +1,12 @@
-import React from 'react'
-import ProfileSettings from '../_components/ProfileSettings'
+import React from "react";
 
 function Settings() {
   return (
     <div>
-        <ProfileSettings/>
+      {/* <ProfileSettings/> */}
+      Profile settings
     </div>
-  )
+  );
 }
 
-export default Settings
+export default Settings;
