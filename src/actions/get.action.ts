@@ -2,40 +2,56 @@
 import { baseApi } from "@/Helper/ApiBase";
 import axiosInstance from "@/lib/AxiosInstance";
 
+// Global fetch timeout (8 seconds - below Vercel's 10s limit)
+const FETCH_TIMEOUT = 8000;
+
+const fetchWithTimeout = async (url: string, options: RequestInit = {}) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      next: { revalidate: 60 },
+    });
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    clearTimeout(timeoutId);
+    throw error;
+  }
+};
+
 export const getCourses = async (search: string = ""): Promise<any[]> => {
   try {
     const url = search
       ? `${baseApi}/courses?title=${encodeURIComponent(search)}`
       : `${baseApi}/courses`;
 
-    const response = await fetch(url, { cache: "no-store" });
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    return await response.json();
+    return await fetchWithTimeout(url);
   } catch (error) {
     console.error("Failed to fetch courses:", error);
-    return [];
+    return []; // Return empty array instead of failing
   }
 };
 
 export const getSingleCourse = async (id: number) => {
   try {
-    const response = await fetch(`${baseApi}/courses/${id}`);
-    return await response.json();
+    return await fetchWithTimeout(`${baseApi}/courses/${id}`);
   } catch (error: any) {
-    console.log("error", error);
-    throw new Error(error?.message || "Failed to fetch Course item");
+    console.error("Fetch error:", error);
+    throw new Error(error?.message || "Failed to fetch Course");
   }
 };
 
 export const getModules = async (): Promise<any[]> => {
   try {
-    const response = await fetch(`${baseApi}/modules`, { cache: "no-store" });
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    return await response.json();
+    return await fetchWithTimeout(`${baseApi}/modules`);
   } catch (error) {
     console.error("Failed to fetch Modules:", error);
     return [];
@@ -44,35 +60,39 @@ export const getModules = async (): Promise<any[]> => {
 
 export const getSingleModule = async (id: number) => {
   try {
-    const res = await axiosInstance.get(`/modules/${id}`);
+    const res = await axiosInstance.get(`/modules/${id}`, {
+      timeout: FETCH_TIMEOUT,
+    });
     return res.data;
   } catch (error: any) {
-    console.log("error", error);
-    throw new Error(error?.message || "Failed to fetch modules item");
+    console.error("Axios error:", error);
+    throw new Error(error?.message || "Failed to fetch module");
   }
 };
 
 export const getLectures = async (): Promise<any[]> => {
   try {
-    const response = await fetch(`${baseApi}/lecture`, { cache: "no-store" });
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    const data = await response.json();
-    console.log("Lectures data:", data); // Add this log to inspect the response
+    const data = await fetchWithTimeout(
+      `${baseApi}/lecture`
+    );
     return data;
   } catch (error) {
-    console.error("Failed to fetch lecture:", error);
+    console.error("Failed to fetch lectures:", error);
     return [];
   }
 };
 
 export const getSingleLecture = async (id: number) => {
   try {
-    const res = await axiosInstance.get(`/lecture/${id}`);
+    const res = await axiosInstance.get(
+      `/lecture/${id}`,
+      {
+        timeout: FETCH_TIMEOUT,
+      }
+    );
     return res.data;
   } catch (error: any) {
-    console.log("error", error);
-    throw new Error(error?.message || "Failed to fetch lecture item");
+    console.error("Axios error:", error);
+    throw new Error(error?.message || "Failed to fetch lecture");
   }
 };
