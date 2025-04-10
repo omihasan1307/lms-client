@@ -1,1 +1,1 @@
-export const baseApi = "http://localhost:5000/api/v1";
+export const baseApi = "https://lms-server-3-ecn9.onrender.com/api/v1";
